@@ -48,6 +48,10 @@ group :standalone do
   gem "puma", :platforms => [:jruby, :rbx, :mswin]
 end
 
+group :test, :development do
+  gem "rspec-rails"
+end
+
 group :test do
   gem "rails-controller-testing"
 end
