@@ -19,6 +19,7 @@ gem "protected_attributes"
 ### FIXME: remove this
 
 gem "diff-lcs"
+gem "json"
 gem "dalli"
 gem "connection_pool"
 gem "exception_notification"
@@ -38,12 +39,24 @@ gem "streamio-ffmpeg"
 # The git 1.2.x contains webm; this is what we want
 gem "file_signature", :git => 'http://github.com/distler/file_signature.git'
 
+group :development do
+  gem "quiet_assets"
+  gem "puma"
+end
+
+group :test, :development do
+  gem "rspec-rails"
+end
+
 group :standalone do
   platform :mri do
     gem "unicorn", :require => false
     gem "unicorn-worker-killer", :require => false
+    gem "gctools"
   end
   gem "puma", :platforms => [:jruby, :rbx, :mswin], :require => false
+  gem "puma", :platforms => [:jruby, :rbx]
+  gem "thin", :platforms => [:mswin, :mingw]
 end
 
 group :test do
@@ -58,6 +71,4 @@ gem "jbuilder", "~> 2.5"
 gem "oj", :platforms => :mri
 gem "multi_json"
 gem "jbuilder"
-
-# Must be last.
-gem "rack-mini-profiler", group: :development
+gem "rack-mini-profiler"
