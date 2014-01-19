@@ -37,22 +37,25 @@ gem "mini_magick"
 gem "image_size"
 gem "i18n-js", ">= 3.0.0.rc7"
 
-gem "streamio-ffmpeg"
-# The git 1.2.x contains webm; this is what we want
-gem "file_signature", :git => 'http://github.com/distler/file_signature.git'
+group :development do
+  gem "quiet_assets"
+  gem "puma"
+end
+
+group :test, :development do
+  gem "rspec-rails"
+end
 
 group :standalone do
   platform :mri do
     gem "unicorn"
     gem "unicorn-worker-killer"
-    gem "gctools"
   end
   gem "puma", :platforms => [:jruby, :rbx]
+  gem "thin", :platforms => [:mswin, :mingw]
 end
 
 gem "oj", :platforms => :mri
 gem "multi_json"
 gem "jbuilder"
-
-# Must be last.
-gem "rack-mini-profiler", :group => :development
+gem "rack-mini-profiler"
