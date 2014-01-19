@@ -44,7 +44,11 @@ group :development do
 end
 
 group :test, :development do
+  gem "rspec"
   gem "rspec-rails"
+  gem "factory_girl_rails", "~> 4.0"
+  gem "autotest"
+  gem "autotest-standalone"
 end
 
 group :standalone do
