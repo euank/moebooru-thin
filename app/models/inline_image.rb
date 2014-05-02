@@ -136,7 +136,7 @@ class InlineImage < ActiveRecord::Base
   end
 
   def preview_dimensions
-    return Moebooru::Resizer.reduce_to({:width => width, :height => height}, {:width => 150, :height => 150})
+    Moebooru::Resizer.reduce_to({:width => width, :height => height}, {:width => 150, :height => 150})
   end
 
   def thumb_size

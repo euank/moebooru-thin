@@ -41,6 +41,10 @@ gem "mini_magick"
 gem "cache_digests"
 gem "i18n-js"
 
+gem "streamio-ffmpeg"
+# The git 1.2.x contains webm; this is what we want
+gem "file_signature", :git => 'http://github.com/distler/file_signature.git'
+
 group :development do
   gem "quiet_assets"
   gem "hooves", :platforms => :mri, :require => "hooves/default"

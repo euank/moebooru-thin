@@ -13,7 +13,7 @@ module PostImageStoreMethods
     end
 
     def preview_path
-      if image?
+      if image? || video?
         "#{Rails.root}/public/data/preview/#{md5}.jpg"
       else
         "#{Rails.root}/public/download-preview.png"
@@ -27,7 +27,7 @@ module PostImageStoreMethods
     def preview_url
       if status == "deleted"
         CONFIG['url_base'] + "/deleted-preview.png"
-      elsif image?
+      elsif image? || video?
         CONFIG["url_base"] + "/data/preview/#{md5}.jpg"
       else
         CONFIG["url_base"] + "/download-preview.png"
@@ -67,7 +67,7 @@ module PostImageStoreMethods
       FileUtils.mv(tempfile_path, file_path)
       FileUtils.chmod(0664, file_path)
 
-      if image?
+      if image? || video?
         FileUtils.mkdir_p(File.dirname(preview_path), :mode => 0775)
         FileUtils.mv(tempfile_preview_path, preview_path)
         FileUtils.chmod(0664, preview_path)
