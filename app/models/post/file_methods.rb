@@ -40,7 +40,7 @@ module PostFileMethods
   end
 
   def validate_content_type
-    unless %w(jpg png gif swf webm).include?(file_ext.downcase)
+    unless %w(jpg png gif swf webm pdf).include?(file_ext.downcase)
       errors.add(:file, "is an invalid content type: " + file_ext.downcase)
       return false
     end
@@ -276,6 +276,9 @@ module PostFileMethods
     elsif FFMPEG::Movie.new(tempfile_path).valid?
       self.file_ext = File.magic_number_type(tempfile_path).to_s # returns webm for webm
     end
+    if imgsize.format.nil?
+      self.file_ext = "pdf" if File.magic_number_type(tempfile_path).to_s == 'pdf'
+    end
   end
 
   # Assigns a CGI file to the post. This writes the file to disk and generates a unique file name.
@@ -354,7 +357,7 @@ module PostFileMethods
 
   # Returns true if the post is a Flash movie.
   def flash?
-    file_ext == "swf"
+    %w(swf pdf).include?(file_ext.downcase)
   end
 
   def find_ext(file_path)
