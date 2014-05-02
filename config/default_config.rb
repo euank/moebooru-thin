@@ -16,3 +16,6 @@ CONFIG['bundler_groups'] ||= [:default, Rails.env]
 CONFIG['bundler_groups'] << 'standalone' if CONFIG['standalone']
 
 CONFIG['bgcolor'] ||= 'gray'
+
+# Whether to display the news banner at the top
+CONFIG['show_news_banner'] = true if CONFIG['show_news_banner'].nil?
