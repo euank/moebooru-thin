@@ -2,23 +2,21 @@ source "https://rubygems.org"
 
 gem "rails", "~> 5.0.1"
 
-gem "coffee-rails", "~> 4.2.0" # Rails 5.0 default
+gem "coffee-rails", "~> 4.0.0"
+gem "coffee-rails-source-maps", :group => :development
 gem "jquery-rails"
 gem "jquery-ui-rails"
-gem "uglifier", ">= 1.3.0" # Rails 5.0 default
+gem "uglifier"
 
-gem "sass-rails", "~> 5.0" # Rails 5.0 default
+gem "sass-rails"
 
-source "https://rails-assets.org" do
-  gem "rails-assets-js-cookie"
-  gem "rails-assets-mousetrap"
-end
+gem "pg", :platforms => [:ruby, :mswin, :mingw]
+gem "activerecord-jdbcpostgresql-adapter", "~> 1.3.0.rc1", :platforms => :jruby
 
-gem "non-stupid-digest-assets"
-
-gem "pg", :platforms => [:ruby, :mingw]
-gem "activerecord-jdbcpostgresql-adapter", ">= 1.3.0", :platforms => :jruby
-gem "foreigner"
+### FIXME: remove this
+gem "actionpack-page_caching"
+gem "protected_attributes"
+### FIXME: remove this
 
 gem "diff-lcs"
 gem "dalli"
@@ -57,6 +55,10 @@ end
 gem "pry", :group => [:development, :test]
 
 gem "jbuilder", "~> 2.5" # Rails 5.0 default
+
+gem "oj", :platforms => :mri
+gem "multi_json"
+gem "jbuilder"
 
 # Must be last.
 gem "rack-mini-profiler", :group => :development
