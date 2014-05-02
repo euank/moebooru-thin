@@ -33,6 +33,7 @@ On RHEL5 (and 6), it goes like this:
 * postgresql94-devel
 * postgresql94-server
 * readline-devel
+* libmagic-devel
 
 Base, EPEL, and postgresql official repositories contain all the requirements.
 
