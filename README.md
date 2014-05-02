@@ -3,9 +3,16 @@
 Moebooru
 ========
 
-An image board.
+This project is based on original Moebooru which is being used in [yande.re Image Board](http://yande.re). Changes compared to original Moebooru:
 
-* [Demo site](http://moe.dev.myconan.net)
+* Compatible with Ruby 1.9, JRuby 1.7, and Rubinius 2.0
+* Uses Rails 4.0
+* Updated gems
+* Pool ZIP support for nginx (with `mod_zip`)
+
+As this is still in development, bug reports are welcome.
+
+* [Demo site](http://moe.myconan.net)
 * [Source Repository](http://github.com/moebooru/moebooru)
 
 Requirements
@@ -33,8 +40,17 @@ On RHEL5 (and 6), it goes like this:
 * postgresql94-devel
 * postgresql94-server
 * readline-devel
+* libmagic-devel
 
-Base, EPEL, and postgresql official repositories contain all the requirements.
+Base and EPEL repositories contain all the requirements.
+
+On Ubuntu 10.04.4 LTS
+
+* `apt-get install postgresql-contrib python-software-properties postgresql libpq-dev libxml2-dev libxslt-dev mercurial jhead build-essential libgd2-noxpm-dev libmagic-dev`
+
+* [Brightbox repo](http://blog.brightbox.co.uk/posts/next-generation-ruby-packages-for-ubuntu) would work if you're too lazy to compile ruby
+
+* add the ppa and then `apt-get install ruby1.9.3`
 
 Installation
 ------------
