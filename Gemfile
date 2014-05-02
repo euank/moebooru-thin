@@ -39,6 +39,10 @@ gem "mini_magick"
 gem "image_size"
 gem "i18n-js", ">= 3.0.0.rc7"
 
+gem "streamio-ffmpeg"
+# The git 1.2.x contains webm; this is what we want
+gem "file_signature", :git => 'http://github.com/distler/file_signature.git'
+
 group :standalone do
   platform :mri do
     gem "unicorn"
