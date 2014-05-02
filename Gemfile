@@ -2,23 +2,21 @@ source "https://rubygems.org"
 
 gem "rails", "~> 5.0.0"
 
-gem "coffee-rails", "~> 4.2.0" # Rails 5.0 default
+gem "coffee-rails", "~> 4.0.0"
+gem "coffee-rails-source-maps", :group => :development
 gem "jquery-rails"
 gem "jquery-ui-rails"
-gem "uglifier", ">= 1.3.0" # Rails 5.0 default
+gem "uglifier"
 
-gem "sass-rails", "~> 5.0" # Rails 5.0 default
+gem "sass-rails"
 
-source "https://rails-assets.org" do
-  gem "rails-assets-js-cookie"
-  gem "rails-assets-mousetrap"
-end
+gem "pg", :platforms => [:ruby, :mswin, :mingw]
+gem "activerecord-jdbcpostgresql-adapter", "~> 1.3.0.rc1", :platforms => :jruby
 
-gem "non-stupid-digest-assets"
-
-gem "pg", :platforms => [:ruby, :mingw]
-gem "activerecord-jdbcpostgresql-adapter", ">= 1.3.0", :platforms => :jruby
-gem "foreigner"
+### FIXME: remove this
+gem "actionpack-page_caching"
+gem "protected_attributes"
+### FIXME: remove this
 
 gem "diff-lcs"
 gem "json"
@@ -49,22 +47,12 @@ group :standalone do
     gem "unicorn-worker-killer"
     gem "gctools"
   end
-  gem "puma", :platforms => [:jruby, :rbx, :mswin]
+  gem "puma", :platforms => [:jruby, :rbx]
 end
-
-group :test, :development do
-  gem "rspec-rails"
-end
-
-group :test do
-  gem "rails-controller-testing"
-end
-
-gem "pry", :group => [:development, :test]
 
 gem "oj", :platforms => :mri
 gem "multi_json"
-gem "jbuilder", "~> 2.5" # Rails 5.0 default
+gem "jbuilder"
 
 # Must be last.
 gem "rack-mini-profiler", :group => :development
