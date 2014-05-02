@@ -2,13 +2,23 @@ source "https://rubygems.org"
 
 gem "rails", "~> 8.1.0"
 
-gem "sprockets-rails"
-gem "jsbundling-rails", ">= 1.3.0"
-gem "terser"
+gem "coffee-rails", "~> 4.0.0"
+gem "coffee-rails-source-maps", :group => :development
+gem "jquery-rails"
+gem "jquery-ui-rails"
+gem "uglifier"
 
-gem "pg"
+gem "sass-rails"
 
-gem "diff-lcs", require: [ "diff-lcs", "diff/lcs/array" ]
+gem "pg", :platforms => [:ruby, :mswin, :mingw]
+gem "activerecord-jdbcpostgresql-adapter", "~> 1.3.0.rc1", :platforms => :jruby
+
+### FIXME: remove this
+gem "actionpack-page_caching"
+gem "protected_attributes"
+### FIXME: remove this
+
+gem "diff-lcs"
 gem "dalli"
 gem "connection_pool"
 gem "exception_notification"
@@ -44,6 +54,10 @@ gem "pry", group: [ :development, :test ]
 gem "rubocop-rails-omakase", require: false, group: [ :development ]
 
 gem "jbuilder", "~> 2.5"
+
+gem "oj", :platforms => :mri
+gem "multi_json"
+gem "jbuilder"
 
 # Must be last.
 gem "rack-mini-profiler", group: :development
