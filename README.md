@@ -41,12 +41,13 @@ On RHEL5 (and 6), it goes like this:
 * postgresql84-devel
 * postgresql84-server
 * readline-devel
+* libmagic-devel
 
 Base and EPEL repositories contain all the requirements.
 
 On Ubuntu 10.04.4 LTS
 
-* `apt-get install postgresql-contrib python-software-properties postgresql libpq-dev libxml2-dev libxslt-dev mercurial jhead build-essential libgd2-noxpm-dev`
+* `apt-get install postgresql-contrib python-software-properties postgresql libpq-dev libxml2-dev libxslt-dev mercurial jhead build-essential libgd2-noxpm-dev libmagic-dev`
 
 * [Brightbox repo](http://blog.brightbox.co.uk/posts/next-generation-ruby-packages-for-ubuntu) would work if you're too lazy to compile ruby
 
