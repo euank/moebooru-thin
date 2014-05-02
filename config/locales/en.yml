@@ -828,7 +828,7 @@ en:
         download:
           _: Download
           info: You must download this file manually.
-        save_flash: Save this flash (right click and save)
+        save_flash: Save this file (right click and save)
       image_footer:
         edit: Edit
         respond: Respond

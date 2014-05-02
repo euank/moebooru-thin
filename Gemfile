@@ -41,6 +41,8 @@ gem "mini_magick"
 gem "cache_digests"
 gem "i18n-js"
 
+gem "file_signature", :git => 'http://github.com/distler/file_signature.git'
+
 group :development do
   gem "quiet_assets"
   gem "hooves", :platforms => :mri, :require => "hooves/default"

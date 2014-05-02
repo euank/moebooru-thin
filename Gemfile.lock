@@ -1,3 +1,9 @@
+GIT
+  remote: http://github.com/distler/file_signature.git
+  revision: 1fc6d3dab7c1cc1896911c000ebf79ef315036ef
+  specs:
+    file_signature (1.2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -189,6 +195,7 @@ DEPENDENCIES
   dalli
   diff-lcs
   exception_notification
+  file_signature!
   gctools
   geoip
   hooves
