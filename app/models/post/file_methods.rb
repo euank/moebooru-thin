@@ -37,7 +37,7 @@ module Post::FileMethods
   end
 
   def validate_content_type
-    unless %w[jpg png gif webp swf].include?(file_ext.downcase)
+    unless %w(jpg png gif swf webm).include?(file_ext.downcase)
       errors.add(:file, "is an invalid content type: " + file_ext.downcase)
       throw :abort
     end
@@ -179,7 +179,7 @@ module Post::FileMethods
   end
 
   def generate_preview
-    return true unless image? && width && height
+    return true unless (image? || video?) && width && height
 
     size = Moebooru::Resizer.reduce_to({ width: width, height: height }, width: 300, height: 300)
 
@@ -201,7 +201,17 @@ module Post::FileMethods
       return false
     end
 
+    # If it's a movie, generate the thumbnail with ffmpeg
+
     begin
+      if video?
+        movie = FFMPEG::Movie.new(path)
+        screenshot_path = Tempfile.new(['webmshot','.png']).path
+        movie.screenshot(screenshot_path)
+        path = screenshot_path
+        ext = 'jpg'
+      end
+
       Moebooru::Resizer.resize(ext, path, tempfile_preview_path, size, 85)
     rescue => x
       errors.add "preview", "couldn't be generated (#{x})"
@@ -247,8 +257,10 @@ module Post::FileMethods
 
     imgsize = Moebooru::ImageSizeExif.path(tempfile_path)
 
-    if imgsize[:type]
-      self.file_ext = imgsize[:type].gsub(/jpeg/i, "jpg").downcase
+    if !imgsize.format.nil?
+      self.file_ext = imgsize.format.to_s.gsub(/jpeg/i, "jpg").downcase
+    elsif FFMPEG::Movie.new(tempfile_path).valid?
+      self.file_ext = File.magic_number_type(tempfile_path).to_s # returns webm for webm
     end
   end
 
@@ -270,9 +282,13 @@ module Post::FileMethods
 
   def set_image_dimensions
     if image? || flash?
-      imgsize = Moebooru::ImageSizeExif.path(tempfile_path)
-      self.width = imgsize[:width]
-      self.height = imgsize[:height]
+      imgsize = ImageSize.path(tempfile_path)
+      self.width = imgsize.width
+      self.height = imgsize.height
+    elsif video?
+      movie = FFMPEG::Movie.new(tempfile_path)
+      self.width = movie.width
+      self.height = movie.height
     end
     self.file_size = File.size(tempfile_path) rescue 0
   end
@@ -294,7 +310,7 @@ module Post::FileMethods
 
     self.status = "pending"
     self.status_reason = "low-res"
-    true
+    return true
   end
 
   # If this post is pending, and the user has too many pending posts, reject the upload.
@@ -315,6 +331,10 @@ module Post::FileMethods
   # Returns true if the post is an image format that GD can handle.
   def image?
     %w[jpg jpeg gif png webp].include?(file_ext.downcase)
+  end
+
+  def video?
+      %w(webm).include?(file_ext.downcase)
   end
 
   # Returns true if the post is a Flash movie.
@@ -350,22 +370,24 @@ module Post::FileMethods
     when "application/x-shockwave-flash"
       "swf"
 
+    else
+      nil
     end
   end
 
   def raw_preview_dimensions
-    if image?
-      dim = Moebooru::Resizer.reduce_to({ width: width, height: height }, width: 300, height: 300)
-      [ dim[:width], dim[:height] ]
+    if image? || video?
+      dim = Moebooru::Resizer.reduce_to({ :width => width, :height => height }, :width => 300, :height => 300)
+      return [dim[:width], dim[:height]]
     else
       [ 300, 300 ]
     end
   end
 
   def preview_dimensions
-    if image?
-      dim = Moebooru::Resizer.reduce_to({ width: width, height: height }, width: 150, height: 150)
-      [ dim[:width], dim[:height] ]
+    if image? || video?
+      dim = Moebooru::Resizer.reduce_to({ :width => width, :height => height }, :width => 150, :height => 150)
+      return [dim[:width], dim[:height]]
     else
       [ 150, 150 ]
     end

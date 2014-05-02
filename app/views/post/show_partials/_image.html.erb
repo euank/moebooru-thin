@@ -20,6 +20,16 @@
                     :height => file_sample[:height],
                     :large_width => @post.get_file_jpeg(@current_user)[:width],
                     :large_height => @post.get_file_jpeg(@current_user)[:height]) %>
+    <% elsif @post.video? %>
+      <%= video_tag(@post.file_url,
+                    autoplay: true,
+                    loop: true,
+                    controls: true,
+                    :alt => @post.cached_tags,
+                    :id => 'video',
+                    :class => "video",
+                    :width => @post.width,
+                    :height => @post.height) %>
     <% elsif @post.flash? %>
       <object width="<%= @post.width %>" height="<%= @post.height %>">
         <param name="movie" value="<%= @post.file_url %>">

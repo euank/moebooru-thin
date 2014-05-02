@@ -21,9 +21,20 @@ gem "nokogiri"
 gem "rails-i18n"
 gem "addressable", require: "addressable/uri"
 gem "mini_magick"
-gem "i18n-js", "~> 3.0.0"
-gem "mini_mime"
-gem "puma", require: false
+gem "image_size"
+gem "i18n-js", ">= 3.0.0.rc7"
+
+gem "streamio-ffmpeg"
+# The git 1.2.x contains webm; this is what we want
+gem "file_signature", :git => 'http://github.com/distler/file_signature.git'
+
+group :standalone do
+  platform :mri do
+    gem "unicorn", :require => false
+    gem "unicorn-worker-killer", :require => false
+  end
+  gem "puma", :platforms => [:jruby, :rbx, :mswin], :require => false
+end
 
 group :test do
   gem "rails-controller-testing"
