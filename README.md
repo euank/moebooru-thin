@@ -31,8 +31,10 @@ On RHEL, it goes like this (untested):
 * nodejs
 * openssl-devel
 * pcre-devel
-* postgresql15-devel
-* postgresql15-server
+* postgresql94-devel
+* postgresql94-server
+* readline-devel
+* libmagic-devel
 
 Base, EPEL, dnf module, and postgresql official repositories contain all the requirements.
 
