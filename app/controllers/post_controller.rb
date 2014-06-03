@@ -10,7 +10,7 @@ class PostController < ApplicationController
   before_action :set_query_date, :only => [:popular_by_day, :popular_by_week, :popular_by_month]
   after_action :save_tags_to_cookie, :only => [:update, :create]
 
-  helper :wiki, :tag, :comment, :pool, :favorite, :advertisements
+  helper :wiki, :tag, :comment, :pool, :favorite
 
   def activate
     return head :no_content unless params[:post_ids].is_a?(Array)
