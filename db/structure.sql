@@ -330,41 +330,6 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: advertisements; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE advertisements (
-    id integer NOT NULL,
-    image_url character varying(255) NOT NULL,
-    referral_url character varying(255) NOT NULL,
-    ad_type character varying(255) NOT NULL,
-    status character varying(255) NOT NULL,
-    hit_count integer DEFAULT 0 NOT NULL,
-    width integer NOT NULL,
-    height integer NOT NULL
-);
-
-
---
--- Name: advertisements_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE advertisements_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: advertisements_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE advertisements_id_seq OWNED BY advertisements.id;
-
-
---
 -- Name: artist_urls; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1611,13 +1576,6 @@ CREATE TABLE wiki_pages (
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY advertisements ALTER COLUMN id SET DEFAULT nextval('advertisements_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY artist_urls ALTER COLUMN id SET DEFAULT nextval('artist_urls_id_seq'::regclass);
 
 
@@ -1759,14 +1717,6 @@ ALTER TABLE ONLY user_logs ALTER COLUMN id SET DEFAULT nextval('user_logs_id_seq
 --
 
 ALTER TABLE ONLY user_records ALTER COLUMN id SET DEFAULT nextval('user_records_id_seq'::regclass);
-
-
---
--- Name: advertisements_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY advertisements
-    ADD CONSTRAINT advertisements_pkey PRIMARY KEY (id);
 
 
 --
@@ -3448,6 +3398,8 @@ INSERT INTO schema_migrations (version) VALUES ('20140309152432');
 INSERT INTO schema_migrations (version) VALUES ('20140427041839');
 
 INSERT INTO schema_migrations (version) VALUES ('20140429125422');
+
+INSERT INTO schema_migrations (version) VALUES ('20140603085449');
 
 INSERT INTO schema_migrations (version) VALUES ('21');
 

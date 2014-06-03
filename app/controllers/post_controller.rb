@@ -12,7 +12,7 @@ class PostController < ApplicationController
   before_filter :janitor_only, :only => [:moderate, :undelete]
   after_filter :save_tags_to_cookie, :only => [:update, :create]
 
-  helper :wiki, :tag, :comment, :pool, :favorite, :advertisements
+  helper :wiki, :tag, :comment, :pool, :favorite
 
   def activate
     ids = params[:post_ids].map { |id| id.to_i }
