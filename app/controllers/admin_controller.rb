@@ -49,42 +49,4 @@ class AdminController < ApplicationController
       @user = User.new
     end
   end
-
-  def cache_stats
-    keys = []
-    [0, 20, 30, 35, 40, 50].each do |level|
-      keys << "stats/count/level=#{level}"
-
-      [0, 1, 2, 3, 4, 5].each do |tag_count|
-        keys << "stats/tags/level=#{level}&tags=#{tag_count}"
-      end
-
-      keys << "stats/page/level=#{level}&page=0-10"
-      keys << "stats/page/level=#{level}&page=10-20"
-      keys << "stats/page/level=#{level}&page=20+"
-    end
-
-    @post_stats = keys.each_with_object({}) { |i, a| a[i] = Rails.cache.read(i) }
-  end
-
-  def reset_post_stats
-    keys = []
-    [0, 20, 30, 35, 40].each do |level|
-      keys << "stats/count/level=#{level}"
-
-      [0, 1, 2, 3, 4, 5].each do |tag_count|
-        keys << "stats/tags/level=#{level}&tags=#{tag_count}"
-      end
-
-      keys << "stats/page/level=#{level}&page=0-10"
-      keys << "stats/page/level=#{level}&page=10-20"
-      keys << "stats/page/level=#{level}&page=20+"
-    end
-
-    keys.each do |key|
-      Rails.cache.write(key, 0)
-    end
-
-    redirect_to :action => "cache_stats"
-  end
 end
