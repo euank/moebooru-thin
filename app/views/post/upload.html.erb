@@ -35,7 +35,13 @@
   <%= form_tag({:controller => "post", :action => "create"}, :level => :member, :multipart => true, :id => "edit-form") do %>
     <div id="posts">
       <% if params[:url] %>
-        <%= tag :img, :src => params['url'], :alt => params['url'], :title => 'Preview', :id => 'image' %>
+          <% if params[:url] =~ /webm$/i %>
+            <%= video_tag(params[:url], alt: params[:url], title: "Preview", 
+                          id: "image", class: 'video', autoplay: true, 
+                          loop: true, controls: true) %>
+          <% else %>
+            <%= tag :img, :src => params['url'], :alt => params['url'], :title => 'Preview', :id => 'image' %>
+          <% end %>
         <p id="scale"></p>
         <script type="text/javascript">
         document.observe("dom:loaded", function() {
