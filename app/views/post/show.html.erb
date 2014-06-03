@@ -1,5 +1,5 @@
 <% @canonical_url = url_for(:controller => '/post', :action => :show, :id => @post.id, :only_path => false) %>
-<% provide :title, "#{@post.title_tags.tr('_', ' ')} | ##{@post.id}" %>
+<% provide :title, @post.title_tags.tr('_', ' ') %>
 <%- content_for :html_header do -%>
   <%= render 'social_meta' -%>
 <%- end -%>
@@ -24,16 +24,8 @@
  <br />
   <%= render :partial => "post/show_partials/social_sharing" %>
  <br />
-  <% if CONFIG["can_see_ads"].call(@current_user) %>
-  <%= render :partial => "vertical" %>
-  <% end %>
     </div>
     <div class="content" id="right-col">
-      <% if CONFIG["can_see_ads"].call(@current_user) %>
-        <%= render :partial => "horizontal" %>
-        <br />
-        <br />
-      <% end %>
       <%= render :partial => "post/show_partials/image" %>
       <%= render :partial => "post/show_partials/image_footer" %>
       <%= render :partial => "post/show_partials/edit" %>
@@ -45,6 +37,15 @@
 
         if (Cookie.get('resize_image') == '1') {
           Post.resize_image()
+        }
+
+        var anchored_to_comment = window.location.hash == "#comments";
+        if(window.location.hash.match(/^#c[0-9]+$/))
+          anchored_to_comment = true;
+
+        if (Cookie.get('show_defaults_to_edit') == '1' && !anchored_to_comment) {
+          $('comments').hide();
+          $('edit').show();
         }
 
         <% browser_url = "/post/browse##{@post.id}" %>
