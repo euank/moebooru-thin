@@ -33,7 +33,7 @@ describe AdminController, :type => :controller do
     it "fails if you're not an admin" do
       request.session[:user_id] = @user.id
       get "edit_user"
-      expect(response).not_to be_success # TODO better error
+      expect(response).not_to be_success
     end
     it "works if you're an admin" do
       request.session[:user_id] = @admin.id
@@ -50,7 +50,7 @@ describe AdminController, :type => :controller do
     it "fails if you're not an admin" do
       request.session[:user_id] = @user.id
       post "edit_user"
-      expect(response).not_to be_success # TODO better error
+      expect(response).not_to be_success
     end
     it "lets you change a user's level" do
       request.session[:user_id] = @admin.id
@@ -58,4 +58,44 @@ describe AdminController, :type => :controller do
       expect(@user.reload.level).to eq @admin.level
     end
   end
+
+  describe "GET reset_password" do
+    it "requires you to be logged in" do
+      get "reset_password"
+      expect(response).to redirect_to(:controller =>  "user", :action => "login", url: "/admin/reset_password")
+    end
+
+    it "fails if you're not an admin" do
+      request.session[:user_id] = @user.id
+      get "reset_password"
+      expect(response).not_to be_success
+    end
+    it "works if you're an admin" do
+      request.session[:user_id] = @admin.id
+      get "reset_password"
+      expect(response).to be_success
+    end
+  end
+
+  describe "POST reset_password" do
+    it "requires you to be logged in" do
+      post "reset_password"
+      expect(response).to redirect_to(:controller =>  "user", :action => "login", url: "/admin/reset_password")
+    end
+
+    it "fails if you're not an admin" do
+      request.session[:user_id] = @user.id
+      post "reset_password"
+      expect(response).not_to be_success
+    end
+    it "resets a user's password" do
+      request.session[:user_id] = @admin.id
+      oldpass = @user.password_hash
+      post "reset_password", {user: {name: @user.name}}
+      expect(response).to be_success
+      expect(flash[:notice]).to match(/Password reset to/)
+      expect(@user.reload.password_hash).not_to eq(oldpass)
+    end
+  end
+
 end
