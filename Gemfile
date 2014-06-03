@@ -48,6 +48,15 @@ gem "file_signature", :git => 'http://github.com/distler/file_signature.git'
 group :development do
   gem "quiet_assets"
   gem "hooves", :platforms => :mri, :require => "hooves/default"
+  gem "puma"
+end
+
+group :test, :development do
+  gem "rspec"
+  gem "rspec-rails"
+  gem "factory_girl_rails", "~> 4.0"
+  gem "autotest"
+  gem "autotest-standalone"
 end
 
 group :standalone do
