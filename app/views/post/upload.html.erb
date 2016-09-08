@@ -132,7 +132,7 @@
           <% if @current_user.is_contributor_or_higher? %>
             <tr>
               <th><label for="anonymous"><%= t('.anonymous') %></label></th>
-              <td><%= check_box_tag 'anonymous', '1' %></td>
+              <td><%= check_box_tag 'anonymous', '1', true %></td>
             </tr>
           <% end %>
         </tbody>
