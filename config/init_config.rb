@@ -13,14 +13,22 @@ CONFIG["enable_signups"] = true
 
 # Newly created users start at this level. Set this to 30 if you want everyone
 # to start out as a privileged member.
-CONFIG["starting_level"] = 20
+CONFIG["starting_level"] = 30
+
+# What method to use to store images.
+# local_flat: Store every image in one directory.
+# local_hierarchy: Store every image in a hierarchical directory, based on the post's MD5 hash. On some file systems this may be faster.
+# local_flat_with_amazon_s3_backup: Store every image in a flat directory, but also save to an Amazon S3 account for backup.
+# amazon_s3: Save files to an Amazon S3 account.
+# remote_hierarchy: Some images will be stored on separate image servers using a hierarchical directory.
+CONFIG["image_store"] = :local_flat
 
 # Only used when image_store == :remote_hierarchy. An array of image servers (use http://domain.com format).
 #
 # If nozipfile is set, the mirror won't be used for ZIP mirroring.
 CONFIG["image_servers"] = [
-  #	{ :server => "http://domain.com", :traffic => 0.5 },
-  #	{ :server => "http://domain.com", :traffic => 0.5, :nozipfile => true },
+#	{ :server => "http://domain.com", :traffic => 0.5 },
+#	{ :server => "http://domain.com", :traffic => 0.5, :nozipfile => true },
 ]
 
 # Set to true to enable downloading whole pools as ZIPs.  This requires mod_zipfile
@@ -33,7 +41,7 @@ CONFIG["pool_zips"] = false
 # and should usually be listed in CONFIG["image_servers"] unless this is a backup-
 # only host.
 CONFIG["mirrors"] = [
-  # { :user => "danbooru", :host => "example.com", :data_dir => "/home/danbooru/public/data" },
+	# { :user => "danbooru", :host => "example.com", :data_dir => "/home/danbooru/public/data" },
 ]
 
 # Enables image samples for large images. NOTE: if you enable this, you must manually create a public/data/sample directory.
@@ -98,17 +106,23 @@ CONFIG["download_filename_prefix"] = ""
 
 # Files over this size will always generate a sample, even if already within
 # the above dimensions.
-CONFIG["sample_always_generate_size"] = 512 * 1024
+CONFIG["sample_always_generate_size"] = 512*1024
 
 # These three configs are only relevant if you're using the Amazon S3 image store.
 CONFIG["amazon_s3_access_key_id"] = ""
 CONFIG["amazon_s3_secret_access_key"] = ""
 CONFIG["amazon_s3_bucket_name"] = ""
 
+# This enables various caching mechanisms. You must have memcache (and the memcache-client ruby gem) installed in order for caching to work.
+CONFIG["enable_caching"] = false
+
 # Enabling this will cause Danbooru to cache things longer:
 # - On post/index, any page after the first 10 will be cached for 3-7 days.
 # - post/show is cached
 CONFIG["enable_aggressive_caching"] = false
+
+# The server and port where the memcache client can be accessed. Only relevant if you enable caching.
+CONFIG["memcache_servers"] = ["localhost:11211"]
 
 # Any post rated safe or questionable that has one of the following tags will automatically be rated explicit.
 CONFIG["explicit_tags"] = %w(pussy penis cum anal vibrator dildo masturbation oral_sex sex paizuri penetration guro rape asshole footjob handjob blowjob cunnilingus anal_sex)
@@ -117,10 +131,10 @@ CONFIG["explicit_tags"] = %w(pussy penis cum anal vibrator dildo masturbation or
 CONFIG["comment_threshold"] = 40
 
 # Members cannot post more than X posts in a day.
-CONFIG["member_post_limit"] = 16
+CONFIG["member_post_limit"] = 200
 
 # Members cannot post more than X comments in an hour.
-CONFIG["member_comment_limit"] = 2
+CONFIG["member_comment_limit"] = 50
 
 # This sets the minimum and maximum value a user can record as a vote.
 CONFIG["vote_record_min"] = 0
@@ -138,13 +152,16 @@ CONFIG["vote_descriptions"] = {
 # The maximum image size that will be downloaded by a URL.
 CONFIG["max_image_size"] = 1024 * 1024 * 256
 
+# This allows posts to have parent-child relationships. However, this requires manually updating the post counts stored in table_data by periodically running the script/maintenance script.
+CONFIG["enable_parent_posts"] = true
+
 # Show only the first page of post/index to visitors.
 CONFIG["show_only_first_page"] = false
 
 CONFIG["enable_reporting"] = true
 
 # Enable some web server specific optimizations. Possible values include: apache, nginx, lighttpd.
-CONFIG["web_server"] = "apache"
+CONFIG["web_server"] = "nginx"
 
 # Show a link to Trac.
 CONFIG["enable_trac"] = true
@@ -154,9 +171,9 @@ CONFIG["local_image_service"] = ""
 
 # List of image services available for similar image searching.
 CONFIG["image_service_list"] = {
-  "danbooru.donmai.us" => "http://haruhidoujins.yi.org/multi-search.xml",
-  "moe.imouto.org" => "http://haruhidoujins.yi.org/multi-search.xml",
-  "konachan.com" => "http://haruhidoujins.yi.org/multi-search.xml"
+	"danbooru.donmai.us" => "http://haruhidoujins.yi.org/multi-search.xml",
+	"moe.imouto.org" => "http://haruhidoujins.yi.org/multi-search.xml",
+	"konachan.com" => "http://haruhidoujins.yi.org/multi-search.xml",
 }
 
 # If true, image services receive a URL to the thumbnail for searching, which
@@ -195,13 +212,13 @@ CONFIG["tag_types"] = {
   "copy" => 3,
   "char" => 4
 }
-CONFIG["tag_order"] = %w(artist copyright character general)
+CONFIG['tag_order'] = %w(artist copyright character general)
 
 # Tag type IDs to not list in recent tag summaries, such as on the side of post/index:
 CONFIG["exclude_from_tag_sidebar"] = [0]
 
 # Determine who can see a post. Note that since this is a block, return won't work. Use break.
-CONFIG["can_see_post"] = lambda do |_user, _post|
+CONFIG["can_see_post"] = lambda do |user, post|
   # By default, no posts are hidden.
   true
 
@@ -216,24 +233,24 @@ end
 
 # Determines who can see ads. Note that since this is a block, return won't work. Use break.
 CONFIG["can_see_ads"] = lambda do |user|
-  # By default, only show ads to non-priv users.
-  user.is_member_or_lower?
-
-  # Show no ads at all
-  # false
+  false
 end
 
 # Defines the default blacklists for new users.
 CONFIG["default_blacklists"] = [
-  #  "rating:e loli",
-  #  "rating:e shota",
+  "rating:e"
+#  "rating:e loli",
+#  "rating:e shota",
 ]
 
 # Enable the artists interface.
 CONFIG["enable_artists"] = true
 
+# This is required for Rails 2.0.
+CONFIG["secret_token"] = "This should be at least 30 characters long"
+
 # Users cannot search for more than X regular tags at a time.
-CONFIG["tag_query_limit"] = 6
+CONFIG["tag_query_limit"] = 20
 
 # Set this to insert custom CSS or JavaScript files into your app.
 CONFIG["custom_html_headers"] = nil
@@ -250,11 +267,16 @@ CONFIG["tag_subscription_post_limit"] = 200
 # Max number of fav tags per user
 CONFIG["max_tag_subscriptions"] = 5
 
+# Languages that we're aware of.  This is what we show in "Secondary languages", to let users
+# select which languages they understand and that shouldn't be translated.
+CONFIG["known_languages"] = CONFIG["language_names"].map { |key, lang| key }.sort
+
 # The number of posts a privileged_or_lower can have pending at one time.  Any
 # further posts will be rejected.
 CONFIG["max_pending_images"] = nil
 
-# If set, posts below this size will be set to pending.
+# If set, posts by privileged_or_lower accounts below this size will be set to
+# pending.
 CONFIG["min_mpixels"] = nil
 
 # If true, pending posts act like hidden posts: they're hidden from the index unless
@@ -262,37 +284,4 @@ CONFIG["min_mpixels"] = nil
 # approved.
 CONFIG["hide_pending_posts"] = false
 
-CONFIG["available_locales"] = %w(de en es ja ru zh_CN)
-
-# Time to load local configurations.
-# The timing is probably wrong but whatever, I'll fix this later(tm).
-suppress(LoadError) { require File.expand_path("../local_config", __FILE__) }
-
-# And here be default configurations based on whatever local configurations are.
-# Or something.
-
-# If set, email_from is the address the site sends emails as.  If left alone, emails
-# are sent from CONFIG["admin_contact"].
-CONFIG["email_from"] ||= CONFIG["admin_contact"]
-
-# Set default locale.
-CONFIG["default_locale"] ||= "en"
-
-# Set default url_base if not set in local config.
-CONFIG["url_base"] ||= "http://#{CONFIG["server_host"] || "localhost"}"
-
-# Set secure to false by default due to ssl requirement
-CONFIG["secure"] = false if CONFIG["secure"].nil?
-
-CONFIG["standalone"] = true if CONFIG["standalone"].nil?
-CONFIG["bundler_groups"] ||= [:default, Rails.env]
-CONFIG["bundler_groups"] << "standalone" if CONFIG["standalone"]
-
-CONFIG["bgcolor"] ||= "gray"
-
-CONFIG["threads"] ||= (ENV["MB_THREADS"] || 1).to_i
-
-CONFIG["piwik_host"] ||= ENV["MB_PIWIK_HOST"]
-CONFIG["piwik_site_id"] ||= ENV["MB_PIWIK_ID"]
-
-CONFIG["memcache_servers"] = ENV["MB_MEMCACHE_SERVERS"].split(",") if ENV["MB_MEMCACHE_SERVERS"]
+CONFIG['available_locales'] = %w(de en es ja ru zh_CN)
