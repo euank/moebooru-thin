@@ -2,21 +2,23 @@ source "https://rubygems.org"
 
 gem "rails", "~> 5.0.0"
 
-gem "coffee-rails", "~> 4.0.0"
-gem "coffee-rails-source-maps", :group => :development
+gem "coffee-rails", "~> 4.2.0" # Rails 5.0 default
 gem "jquery-rails"
 gem "jquery-ui-rails"
-gem "uglifier"
+gem "uglifier", ">= 1.3.0" # Rails 5.0 default
 
-gem "sass-rails"
+gem "sass-rails", "~> 5.0" # Rails 5.0 default
 
-gem "pg", :platforms => [:ruby, :mswin, :mingw]
-gem "activerecord-jdbcpostgresql-adapter", "~> 1.3.0.rc1", :platforms => :jruby
+source "https://rails-assets.org" do
+  gem "rails-assets-js-cookie"
+  gem "rails-assets-mousetrap"
+end
 
-### FIXME: remove this
-gem "actionpack-page_caching"
-gem "protected_attributes"
-### FIXME: remove this
+gem "non-stupid-digest-assets"
+
+gem "pg", :platforms => [:ruby, :mingw]
+gem "activerecord-jdbcpostgresql-adapter", ">= 1.3.0", :platforms => :jruby
+gem "foreigner"
 
 gem "diff-lcs"
 gem "json"
@@ -37,25 +39,35 @@ gem "mini_magick"
 gem "image_size"
 gem "i18n-js", ">= 3.0.0.rc7"
 
-group :development do
-  gem "quiet_assets"
-  gem "puma"
-end
-
+gem "streamio-ffmpeg"
+# The git 1.2.x contains webm; this is what we want
+gem "file_signature", :git => 'http://github.com/distler/file_signature.git'
 group :test, :development do
+  gem "rspec"
   gem "rspec-rails"
+  gem "factory_girl_rails", "~> 4.0"
+  gem "autotest"
+  gem "autotest-standalone"
 end
 
 group :standalone do
   platform :mri do
     gem "unicorn"
     gem "unicorn-worker-killer"
+    gem "gctools"
   end
-  gem "puma", :platforms => [:jruby, :rbx]
-  gem "thin", :platforms => [:mswin, :mingw]
+  gem "puma", :platforms => [:jruby, :rbx, :mswin]
 end
+
+group :test do
+  gem "rails-controller-testing"
+end
+
+gem "pry", :group => [:development, :test]
 
 gem "oj", :platforms => :mri
 gem "multi_json"
-gem "jbuilder"
-gem "rack-mini-profiler"
+gem "jbuilder", "~> 2.5" # Rails 5.0 default
+
+# Must be last.
+gem "rack-mini-profiler", :group => :development

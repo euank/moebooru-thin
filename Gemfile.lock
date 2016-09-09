@@ -1,7 +1,14 @@
+GIT
+  remote: http://github.com/distler/file_signature.git
+  revision: 1fc6d3dab7c1cc1896911c000ebf79ef315036ef
+  specs:
+    file_signature (1.2.0)
+
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
   specs:
+    ZenTest (4.11.1)
     actioncable (5.0.0.1)
       actionpack (= 5.0.0.1)
       nio4r (~> 1.2)
@@ -34,11 +41,6 @@ GEM
       activemodel (= 5.0.0.1)
       activesupport (= 5.0.0.1)
       arel (~> 7.0)
-    activerecord-jdbc-adapter (1.3.20)
-      activerecord (>= 2.2)
-    activerecord-jdbcpostgresql-adapter (1.3.20)
-      activerecord-jdbc-adapter (~> 1.3.20)
-      jdbc-postgres (>= 9.1)
     activesupport (5.0.0.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (~> 0.7)
@@ -48,6 +50,9 @@ GEM
       activerecord (>= 3.0.9)
     addressable (2.4.0)
     arel (7.1.1)
+    autotest (4.4.6)
+      ZenTest (>= 4.4.1)
+    autotest-standalone (4.5.11)
     builder (3.2.2)
     coderay (1.1.1)
     coffee-rails (4.2.1)
@@ -58,7 +63,6 @@ GEM
       execjs
     coffee-script-source (1.10.0)
     concurrent-ruby (1.0.2)
-    concurrent-ruby (1.0.2-java)
     connection_pool (2.2.0)
     daemons (1.2.4)
     dalli (2.7.6)
@@ -68,7 +72,11 @@ GEM
       actionmailer (>= 4.0, < 6)
       activesupport (>= 4.0, < 6)
     execjs (2.7.0)
-    ffi (1.9.14-java)
+    factory_girl (4.7.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.7.0)
+      factory_girl (~> 4.7.0)
+      railties (>= 3.0.0)
     foreigner (1.7.4)
       activerecord (>= 3.0.0)
     gctools (0.2.4)
@@ -77,21 +85,19 @@ GEM
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     i18n (0.7.0)
-    i18n-js (3.0.0.rc13)
+    i18n-js (3.0.0.rc14)
       i18n (~> 0.6, >= 0.6.6)
     image_size (1.4.2)
     jbuilder (2.6.0)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
-    jdbc-postgres (9.4.1206)
-    jquery-rails (4.1.1)
+    jquery-rails (4.2.1)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (5.0.5)
       railties (>= 3.2.16)
     json (2.0.2)
-    json (2.0.2-java)
     kgio (2.10.0)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
@@ -105,33 +111,21 @@ GEM
     mini_portile2 (2.1.0)
     minitest (5.9.0)
     multi_json (1.12.1)
-    newrelic_rpm (3.16.0.318)
+    newrelic_rpm (3.16.2.321)
     nio4r (1.2.1)
-    nio4r (1.2.1-java)
     nokogiri (1.6.8)
-      mini_portile2 (~> 2.1.0)
-      pkg-config (~> 1.1.7)
-    nokogiri (1.6.8-java)
-    nokogiri (1.6.8-x86-mingw32)
       mini_portile2 (~> 2.1.0)
       pkg-config (~> 1.1.7)
     non-stupid-digest-assets (1.0.8)
       sprockets (>= 2.0)
-    oj (2.17.2)
+    oj (2.17.4)
     pg (0.18.4)
-    pg (0.18.4-x86-mingw32)
     pkg-config (1.1.7)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    pry (0.10.4-java)
-      coderay (~> 1.1.0)
-      method_source (~> 0.8.1)
-      slop (~> 3.4)
-      spoon (~> 0.0)
     puma (3.6.0)
-    puma (3.6.0-java)
     rack (2.0.1)
     rack-mini-profiler (0.10.1)
       rack (>= 1.2.0)
@@ -149,9 +143,9 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 5.0.0.1)
       sprockets-rails (>= 2.0.0)
-    rails-assets-js-cookie (2.1.2)
+    rails-assets-js-cookie (2.1.3)
     rails-assets-mousetrap (1.6.0)
-    rails-controller-testing (1.0.0)
+    rails-controller-testing (1.0.1)
       actionpack (~> 5.x)
       actionview (~> 5.x)
       activesupport (~> 5.x)
@@ -171,6 +165,27 @@ GEM
       thor (>= 0.18.1, < 2.0)
     raindrops (0.17.0)
     rake (11.2.2)
+    rspec (3.5.0)
+      rspec-core (~> 3.5.0)
+      rspec-expectations (~> 3.5.0)
+      rspec-mocks (~> 3.5.0)
+    rspec-core (3.5.3)
+      rspec-support (~> 3.5.0)
+    rspec-expectations (3.5.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.5.0)
+    rspec-mocks (3.5.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.5.0)
+    rspec-rails (3.5.2)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec-core (~> 3.5.0)
+      rspec-expectations (~> 3.5.0)
+      rspec-mocks (~> 3.5.0)
+      rspec-support (~> 3.5.0)
+    rspec-support (3.5.0)
     sass (3.4.22)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
@@ -181,22 +196,21 @@ GEM
     sitemap_generator (5.1.0)
       builder
     slop (3.6.0)
-    spoon (0.0.4)
-      ffi
     sprockets (3.7.0)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
-    sprockets-rails (3.1.1)
+    sprockets-rails (3.2.0)
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    streamio-ffmpeg (3.0.0)
+      multi_json (~> 1.8)
     thor (0.19.1)
     thread_safe (0.3.5)
-    thread_safe (0.3.5-java)
     tilt (2.0.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    uglifier (3.0.1)
+    uglifier (3.0.2)
       execjs (>= 0.3.0, < 3)
     unicorn (5.1.0)
       kgio (~> 2.6)
@@ -206,27 +220,27 @@ GEM
       unicorn (>= 4, < 6)
     websocket-driver (0.6.4)
       websocket-extensions (>= 0.1.0)
-    websocket-driver (0.6.4-java)
-      websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
     will-paginate-i18n (0.1.15)
     will_paginate (3.1.0)
 
 PLATFORMS
-  java
   ruby
-  x86-mingw32
 
 DEPENDENCIES
   activerecord-jdbcpostgresql-adapter (>= 1.3.0)
   acts_as_versioned_rails3
   addressable
+  autotest
+  autotest-standalone
   coffee-rails (~> 4.2.0)
   connection_pool
   daemons
   dalli
   diff-lcs
   exception_notification
+  factory_girl_rails (~> 4.0)
+  file_signature!
   foreigner
   gctools
   geoip
@@ -251,8 +265,11 @@ DEPENDENCIES
   rails-assets-mousetrap!
   rails-controller-testing
   rails-i18n
+  rspec
+  rspec-rails
   sass-rails (~> 5.0)
   sitemap_generator
+  streamio-ffmpeg
   uglifier (>= 1.3.0)
   unicorn
   unicorn-worker-killer
@@ -260,4 +277,4 @@ DEPENDENCIES
   will_paginate
 
 BUNDLED WITH
-   1.12.5
+   1.10.6
