@@ -2,8 +2,6 @@ source "https://rubygems.org"
 
 gem "rails", "~> 8.1.0"
 
-gem "coffee-rails", "~> 4.0.0"
-gem "coffee-rails-source-maps", :group => :development
 gem "jquery-rails"
 gem "jquery-ui-rails"
 gem "uglifier"
@@ -13,10 +11,6 @@ gem "sass-rails"
 gem "pg", :platforms => [:ruby, :mswin, :mingw]
 gem "activerecord-jdbcpostgresql-adapter", "~> 1.3.0.rc1", :platforms => :jruby
 
-### FIXME: remove this
-gem "actionpack-page_caching"
-gem "protected_attributes"
-### FIXME: remove this
 
 gem "diff-lcs"
 gem "json"
@@ -40,12 +34,15 @@ gem "streamio-ffmpeg"
 gem "file_signature", :git => 'http://github.com/distler/file_signature.git'
 
 group :development do
-  gem "quiet_assets"
   gem "puma"
 end
 
 group :test, :development do
+  gem "rspec"
   gem "rspec-rails"
+  gem "factory_girl_rails"
+  gem "autotest"
+  gem "autotest-standalone"
 end
 
 group :standalone do
@@ -55,7 +52,6 @@ group :standalone do
     gem "gctools"
   end
   gem "puma", :platforms => [:jruby, :rbx, :mswin], :require => false
-  gem "puma", :platforms => [:jruby, :rbx]
   gem "thin", :platforms => [:mswin, :mingw]
 end
 
@@ -66,9 +62,9 @@ end
 gem "pry", group: [ :development, :test ]
 gem "rubocop-rails-omakase", require: false, group: [ :development ]
 
-gem "jbuilder", "~> 2.5"
-
 gem "oj", :platforms => :mri
 gem "multi_json"
 gem "jbuilder"
-gem "rack-mini-profiler"
+
+# Must be last.
+gem "rack-mini-profiler", :group => :development
