@@ -1,0 +1,22 @@
+# Copy this to "database.yml" and adjust the fields accordingly.
+# Only works with postgresql adapter.
+login: &login
+  adapter: postgresql
+  username: postgres
+  password:
+  host: db
+
+development:
+  database: moebooru_dev
+  <<: *login
+
+test:
+  database: moebooru_test
+  <<: *login
+
+production:
+  adapter: postgresql
+  database: moebooru
+  host: <%= ENV['DB_HOST'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASS'] %>
