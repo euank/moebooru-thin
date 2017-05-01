@@ -7,7 +7,8 @@ RUN apt-get upgrade -y
 RUN apt-get install -y gcc g++ imagemagick jhead libxslt-dev libyaml-dev git libssl-dev \
     libpq-dev libreadline-dev libmagic-dev \
     gnash-tools \
-    postgresql-client
+    postgresql-client \
+    rsync
 
 COPY . /moebooru
 WORKDIR /moebooru
