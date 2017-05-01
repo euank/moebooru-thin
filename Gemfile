@@ -5,12 +5,22 @@ gem "rails", "~> 5.0.1"
 gem "jquery-rails"
 gem "jquery-ui-rails"
 gem "uglifier"
+gem "therubyracer"
 
 gem "sass-rails"
 
-gem "pg", :platforms => [:ruby, :mswin, :mingw]
-gem "activerecord-jdbcpostgresql-adapter", "~> 1.3.0.rc1", :platforms => :jruby
 
+source "https://rails-assets.org" do
+  gem "rails-assets-js-cookie"
+  gem "rails-assets-mousetrap"
+end
+
+gem "non-stupid-digest-assets"
+gem 'coffee-rails'
+
+gem "pg", :platforms => [:ruby, :mingw]
+gem "activerecord-jdbcpostgresql-adapter", ">= 1.3.0", :platforms => :jruby
+gem "foreigner"
 
 gem "diff-lcs"
 gem "json"

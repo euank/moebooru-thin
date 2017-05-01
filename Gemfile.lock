@@ -6,6 +6,7 @@ GIT
 
 GEM
   remote: https://rubygems.org/
+  remote: https://rails-assets.org/
   specs:
     ZenTest (4.11.1)
     actioncable (5.0.2)
@@ -70,6 +71,8 @@ GEM
     factory_girl_rails (4.8.0)
       factory_girl (~> 4.8.0)
       railties (>= 3.0.0)
+    foreigner (1.7.4)
+      activerecord (>= 3.0.0)
     gctools (0.2.4)
     geoip (1.6.3)
     get_process_mem (0.2.1)
@@ -90,6 +93,7 @@ GEM
       railties (>= 3.2.16)
     json (2.0.3)
     kgio (2.11.0)
+    libv8 (3.16.14.19)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -106,6 +110,8 @@ GEM
     nio4r (2.0.0)
     nokogiri (1.7.1)
       mini_portile2 (~> 2.1.0)
+    non-stupid-digest-assets (1.0.9)
+      sprockets (>= 2.0)
     oj (2.18.5)
     pg (0.20.0)
     pry (0.10.4)
@@ -131,6 +137,8 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 5.0.2)
       sprockets-rails (>= 2.0.0)
+    rails-assets-js-cookie (2.1.4)
+    rails-assets-mousetrap (1.6.1)
     rails-controller-testing (1.0.1)
       actionpack (~> 5.x)
       actionview (~> 5.x)
@@ -151,6 +159,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     raindrops (0.18.0)
     rake (12.0.0)
+    ref (2.0.0)
     rspec (3.5.0)
       rspec-core (~> 3.5.0)
       rspec-expectations (~> 3.5.0)
@@ -191,6 +200,9 @@ GEM
       sprockets (>= 3.0.0)
     streamio-ffmpeg (3.0.2)
       multi_json (~> 1.8)
+    therubyracer (0.12.3)
+      libv8 (~> 3.16.14.15)
+      ref
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.7)
@@ -214,7 +226,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord-jdbcpostgresql-adapter (~> 1.3.0.rc1)
+  activerecord-jdbcpostgresql-adapter (>= 1.3.0)
   acts_as_versioned_rails3
   addressable
   autotest
@@ -226,6 +238,7 @@ DEPENDENCIES
   exception_notification
   factory_girl_rails
   file_signature!
+  foreigner
   gctools
   geoip
   i18n-js (>= 3.0.0.rc7)
@@ -238,12 +251,15 @@ DEPENDENCIES
   multi_json
   newrelic_rpm
   nokogiri
+  non-stupid-digest-assets
   oj
   pg
   pry
   puma
   rack-mini-profiler
   rails (~> 5.0.1)
+  rails-assets-js-cookie!
+  rails-assets-mousetrap!
   rails-controller-testing
   rails-i18n
   rspec
@@ -251,6 +267,7 @@ DEPENDENCIES
   sass-rails
   sitemap_generator
   streamio-ffmpeg
+  therubyracer
   thin
   uglifier
   unicorn
