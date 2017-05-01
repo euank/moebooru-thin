@@ -10,4 +10,6 @@ if ! bundle exec rake db:migrate; then
 fi
 bundle exec rake assets:precompile
 
+[ -f /conf/local_config.rb ] && ln -vsf /conf/local_config.rb ./config/local_config.rb
+
 exec bundle exec unicorn
