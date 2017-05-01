@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -x
+set -e
+
+export RAILS_ENV=production
+
+if ! bundle exec rake db:migrate; then
+  bundle exec rake db:setup
+  bundle exec rake db:migrate
+fi
+bundle exec rake assets:precompile
+
+exec bundle exec unicorn
