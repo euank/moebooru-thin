@@ -12,4 +12,8 @@ bundle exec rake assets:precompile
 
 [ -f /conf/local_config.rb ] && ln -vsf /conf/local_config.rb ./config/local_config.rb
 
+if [ -d /asset_overrides ]; then
+  rsync -av /asset_overrides/ ./app/assets/
+fi
+
 exec bundle exec unicorn
