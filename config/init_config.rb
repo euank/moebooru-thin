@@ -13,7 +13,15 @@ CONFIG["enable_signups"] = true
 
 # Newly created users start at this level. Set this to 30 if you want everyone
 # to start out as a privileged member.
-CONFIG["starting_level"] = 20
+CONFIG["starting_level"] = 30
+
+# What method to use to store images.
+# local_flat: Store every image in one directory.
+# local_hierarchy: Store every image in a hierarchical directory, based on the post's MD5 hash. On some file systems this may be faster.
+# local_flat_with_amazon_s3_backup: Store every image in a flat directory, but also save to an Amazon S3 account for backup.
+# amazon_s3: Save files to an Amazon S3 account.
+# remote_hierarchy: Some images will be stored on separate image servers using a hierarchical directory.
+CONFIG["image_store"] = :local_flat
 
 # Only used when image_store == :remote_hierarchy. An array of image servers (use http://domain.com format).
 #
@@ -117,10 +125,10 @@ CONFIG["explicit_tags"] = %w(pussy penis cum anal vibrator dildo masturbation or
 CONFIG["comment_threshold"] = 40
 
 # Members cannot post more than X posts in a day.
-CONFIG["member_post_limit"] = 16
+CONFIG["member_post_limit"] = 200
 
 # Members cannot post more than X comments in an hour.
-CONFIG["member_comment_limit"] = 2
+CONFIG["member_comment_limit"] = 50
 
 # This sets the minimum and maximum value a user can record as a vote.
 CONFIG["vote_record_min"] = 0
@@ -138,13 +146,16 @@ CONFIG["vote_descriptions"] = {
 # The maximum image size that will be downloaded by a URL.
 CONFIG["max_image_size"] = 1024 * 1024 * 256
 
+# This allows posts to have parent-child relationships. However, this requires manually updating the post counts stored in table_data by periodically running the script/maintenance script.
+CONFIG["enable_parent_posts"] = true
+
 # Show only the first page of post/index to visitors.
 CONFIG["show_only_first_page"] = false
 
 CONFIG["enable_reporting"] = true
 
 # Enable some web server specific optimizations. Possible values include: apache, nginx, lighttpd.
-CONFIG["web_server"] = "apache"
+CONFIG["web_server"] = "nginx"
 
 # Show a link to Trac.
 CONFIG["enable_trac"] = true
@@ -216,24 +227,21 @@ end
 
 # Determines who can see ads. Note that since this is a block, return won't work. Use break.
 CONFIG["can_see_ads"] = lambda do |user|
-  # By default, only show ads to non-priv users.
-  user.is_member_or_lower?
-
-  # Show no ads at all
-  # false
+  false
 end
 
 # Defines the default blacklists for new users.
 CONFIG["default_blacklists"] = [
-  #  "rating:e loli",
-  #  "rating:e shota",
+  "rating:e"
+#  "rating:e loli",
+#  "rating:e shota",
 ]
 
 # Enable the artists interface.
 CONFIG["enable_artists"] = true
 
 # Users cannot search for more than X regular tags at a time.
-CONFIG["tag_query_limit"] = 6
+CONFIG["tag_query_limit"] = 20
 
 # Set this to insert custom CSS or JavaScript files into your app.
 CONFIG["custom_html_headers"] = nil
