@@ -23,6 +23,7 @@ On RHEL, it goes like this (untested):
 
 * ImageMagick
 * gcc
+* ffmpeg
 * gcc-c++
 * git
 * jhead
