@@ -22,6 +22,7 @@ As this is ongoing project, there will be more changes on requirement as this pr
 On RHEL5 (and 6), it goes like this:
 
 * gcc
+* ffmpeg
 * gcc-c++
 * ImageMagick
 * jhead

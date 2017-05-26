@@ -8,7 +8,8 @@ RUN apt-get install -y gcc g++ imagemagick jhead libxslt-dev libyaml-dev git lib
     libpq-dev libreadline-dev libmagic-dev \
     gnash-tools \
     postgresql-client \
-    rsync
+    rsync \
+    ffmpeg
 
 COPY . /moebooru
 WORKDIR /moebooru
