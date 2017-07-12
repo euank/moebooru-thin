@@ -40,7 +40,7 @@ module Post::FileMethods
   end
 
   def validate_content_type
-    unless %w(jpg png gif swf pdf webm).include?(file_ext.downcase)
+    unless %w(jpg png gif swf pdf webm mp4).include?(file_ext.downcase)
       errors.add(:file, "is an invalid content type: " + file_ext.downcase)
       throw :abort
     end
@@ -351,7 +351,7 @@ module Post::FileMethods
   end
 
   def video?
-      %w(webm).include?(file_ext.downcase)
+      %w(webm mp4).include?(file_ext.downcase)
   end
 
   # Returns true if the post is a Flash movie.
