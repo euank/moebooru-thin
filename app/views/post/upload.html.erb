@@ -35,7 +35,7 @@
   <%= form_tag({:controller => "post", :action => "create"}, :level => :member, :multipart => true, :id => "edit-form") do %>
     <div id="posts">
       <% if params[:url] %>
-          <% if params[:url] =~ /webm$/i %>
+          <% if params[:url] =~ /webm$/i || params[:url] =~ /mp4$/i %>
             <%= video_tag(params[:url], alt: params[:url], title: "Preview", 
                           id: "image", class: 'video', autoplay: true, 
                           loop: true, controls: true) %>
@@ -156,8 +156,7 @@
     var form = $("edit-form");
     form.down("#post_file").on("change", function(e) { form.down("#post_tags").focus(); });
 
-    if(form)
-    {
+    if(form) {
       new PostUploadForm(form, $("progress"));
       new UploadSimilarSearch(form.down("#post_file"), form.down(".similar-results"));
     }
