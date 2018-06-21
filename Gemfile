@@ -1,26 +1,28 @@
 source "https://rubygems.org"
 
-gem "rails", "~> 5.0.1"
+gem "rails", "~> 5.2.0"
 
-gem "jquery-rails"
-gem "jquery-ui-rails"
-gem "uglifier"
 gem "therubyracer"
 
-gem "sass-rails"
+gem "coffee-rails", "~> 4.2" # Rails 5.2 default
+gem "jquery-rails"
+gem "jquery-ui-rails"
+gem "uglifier", ">= 1.3.0" # Rails 5.2 default
 
+gem "sass-rails", "~> 5.0" # Rails 5.2 default
 
 source "https://rails-assets.org" do
   gem "rails-assets-js-cookie"
   gem "rails-assets-mousetrap"
+  gem "rails-assets-timeago"
+  gem "rails-assets-MutationObserver"
 end
 
 gem "non-stupid-digest-assets"
-gem 'coffee-rails'
 
-gem "pg", :platforms => [:ruby, :mingw]
+# FIXME: remove version restriction once activerecord is updated to support pg 1.0+
+gem "pg", "~> 0.18", :platforms => [:ruby, :mingw]
 gem "activerecord-jdbcpostgresql-adapter", ">= 1.3.0", :platforms => :jruby
-gem "foreigner"
 
 gem "diff-lcs"
 gem "json"
@@ -40,6 +42,7 @@ gem "addressable", :require => "addressable/uri"
 gem "mini_magick"
 gem "image_size"
 gem "i18n-js", ">= 3.0.0.rc7"
+gem "mini_mime"
 
 gem "streamio-ffmpeg"
 # The git 1.2.x contains webm; this is what we want
@@ -64,7 +67,6 @@ group :standalone do
     gem "gctools"
   end
   gem "puma", :platforms => [:jruby, :rbx, :mswin], :require => false
-  gem "thin", :platforms => [:mswin, :mingw]
 end
 
 group :test do
@@ -73,9 +75,7 @@ end
 
 gem "pry", :group => [:development, :test]
 
-gem "oj", :platforms => :mri
-gem "multi_json"
-gem "jbuilder"
+gem "jbuilder", "~> 2.5" # Rails 5.2 default
 
 # Must be last.
 gem "rack-mini-profiler", :group => :development
