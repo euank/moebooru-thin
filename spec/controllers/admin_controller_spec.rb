@@ -3,8 +3,8 @@ require 'spec_helper'
 describe AdminController, :type => :controller do
   before(:all) do
     # Note, this must be in this order because the first user gets "autopromoted" to admin
-    @admin = FactoryGirl.create(:admin)
-    @user = FactoryGirl.create(:user)
+    @admin = FactoryBot.create(:admin)
+    @user = FactoryBot.create(:user)
   end
 
   describe "GET index" do

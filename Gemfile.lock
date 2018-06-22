@@ -66,10 +66,10 @@ GEM
       actionmailer (>= 4.0, < 6)
       activesupport (>= 4.0, < 6)
     execjs (2.7.0)
-    factory_girl (4.8.0)
+    factory_bot (4.10.0)
       activesupport (>= 3.0.0)
-    factory_girl_rails (4.8.0)
-      factory_girl (~> 4.8.0)
+    factory_bot_rails (4.10.0)
+      factory_bot (~> 4.10.0)
       railties (>= 3.0.0)
     foreigner (1.7.4)
       activerecord (>= 3.0.0)
@@ -425,7 +425,7 @@ DEPENDENCIES
   dalli
   diff-lcs
   exception_notification
-  factory_girl_rails
+  factory_bot_rails
   file_signature!
   foreigner
   gctools
