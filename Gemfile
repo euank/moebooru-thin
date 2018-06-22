@@ -56,6 +56,7 @@ group :test, :development do
   gem "rspec"
   gem "rspec-rails"
   gem "factory_bot_rails"
+  gem "database_cleaner"
   gem "autotest"
   gem "autotest-standalone"
 end
