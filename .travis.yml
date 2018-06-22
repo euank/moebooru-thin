@@ -12,5 +12,9 @@ addons:
 services:
 - memcached
 
-before_script:
+env:
+- RAILS_ENV=test
+
+script:
 - script/travis_prepare
+- bundle exec rake
