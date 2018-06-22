@@ -4,7 +4,7 @@ login: &login
   adapter: postgresql
   username: postgres
   password:
-  host: db
+  host: <%= ENV["DB_HOST"] || "localhost" %>
 
 development:
   database: moebooru_dev
