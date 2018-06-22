@@ -1,6 +1,9 @@
-dist: trusty
 cache: bundler
-sudo: false
+
+branches:
+  only:
+  - master
+  - dev
 
 language: ruby
 rvm:
