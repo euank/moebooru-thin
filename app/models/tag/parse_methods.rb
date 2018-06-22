@@ -5,7 +5,15 @@ module Tag::ParseMethods
     end
 
     def scan_tags(tags)
-      tags.to_s.gsub(/[%,]/, "").downcase.scan(/\S+/).uniq
+      tags.to_s.gsub(/[%,]/, "").scan(/\S+/).uniq.map do |t|
+        case t
+        when /^source:/
+          # don't lowercase sources, urls are case sensitive
+          t
+        else
+          t.downcase
+        end
+      end
     end
 
     def parse_cast(x, type)
