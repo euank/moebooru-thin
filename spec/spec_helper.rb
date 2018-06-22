@@ -36,6 +36,5 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
-  # Factory girl
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 end

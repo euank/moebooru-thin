@@ -33,7 +33,7 @@ class WikiController < ApplicationController
       if params[:order] == "date"
         { :updated_at => :desc }
       else
-        "LOWER(title)"
+        Arel.sql("LOWER(title)")
       end
 
     limit = params[:limit] || 25
@@ -75,8 +75,8 @@ class WikiController < ApplicationController
   end
 
   def edit
-    if params[:title].nil?
-      render :text => "no title specified"
+    if params[:title].blank?
+      render :plain => "no title specified"
     else
       @wiki_page = WikiPage.find_page(params[:title], params[:version])
 
@@ -101,14 +101,18 @@ class WikiController < ApplicationController
   end
 
   def show
-    if params[:title].nil?
-      render :text => "no title specified"
+    if params[:title].blank?
+      render :plain => "no title specified"
       return
     end
 
     @title = params[:title]
     @page = WikiPage.find_page(params[:title], params[:version])
-    @posts = Post.find_by_tag_join(params[:title], :limit => 8).select { |x| x.can_be_seen_by?(@current_user) }
+    @posts = Post
+      .find_by_tag_join(params[:title])
+      .where.not(:status => "deleted")
+      .limit(8)
+      .select { |x| x.can_be_seen_by?(@current_user) }
     @artist = Artist.find_by_name(params[:title])
     @tag = Tag.find_by_name(params[:title])
 

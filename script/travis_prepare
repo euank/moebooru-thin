@@ -15,4 +15,5 @@ CONFIG["admin_contact"] = "webmaster@#{CONFIG["server_host"]}"
 CONFIG["memcache_servers"] = ["127.0.0.1:11211"]
 EOF
 
-bundle exec rails db:create
+bundle exec rake db:setup
+bundle exec rake db:migrate

@@ -1,16 +1,22 @@
 require 'spec_helper'
+require 'database_cleaner'
 
 describe AdminController, :type => :controller do
   before(:all) do
-    # Note, this must be in this order because the first user gets "autopromoted" to admin
-    @admin = FactoryGirl.create(:admin)
-    @user = FactoryGirl.create(:user)
+    DatabaseCleaner.start
+    # first user is auto-promoted to admin
+    @admin = FactoryBot.create(:admin)
+    @user = FactoryBot.create(:user)
+  end
+
+  after(:all) do
+    DatabaseCleaner.clean
   end
 
   describe "GET index" do
     it "requires you to be logged in" do
       get "index"
-      expect(response).to redirect_to(:controller =>  "user", :action => "login", url: "/admin")
+      expect(response).to redirect_to(:controller =>  "user", :action => "login", :params => {url: "/admin"})
     end
 
     it "fails if you're not an admin" do
@@ -27,7 +33,7 @@ describe AdminController, :type => :controller do
   describe "GET edit_user" do
     it "requires you to be logged in" do
       get "edit_user"
-      expect(response).to redirect_to(:controller =>  "user", :action => "login", url: "/admin/edit_user")
+      expect(response).to redirect_to(:controller =>  "user", :action => "login", :params => {url: "/admin/edit_user"})
     end
 
     it "fails if you're not an admin" do
@@ -45,7 +51,7 @@ describe AdminController, :type => :controller do
   describe "POST edit_user" do
     it "requires you to be logged in" do
       post "edit_user"
-      expect(response).to redirect_to(:controller =>  "user", :action => "login", url: "/admin/edit_user")
+      expect(response).to redirect_to(:controller =>  "user", :action => "login")
     end
     it "fails if you're not an admin" do
       request.session[:user_id] = @user.id
@@ -54,7 +60,7 @@ describe AdminController, :type => :controller do
     end
     it "lets you change a user's level" do
       request.session[:user_id] = @admin.id
-      post "edit_user", {user: {name: @user.name, level: @admin.level}}
+      post "edit_user", {params: {user: {name: @user.name, level: @admin.level}}}
       expect(@user.reload.level).to eq @admin.level
     end
   end
@@ -62,7 +68,7 @@ describe AdminController, :type => :controller do
   describe "GET reset_password" do
     it "requires you to be logged in" do
       get "reset_password"
-      expect(response).to redirect_to(:controller =>  "user", :action => "login", url: "/admin/reset_password")
+      expect(response).to redirect_to(:controller =>  "user", :action => "login", :params => {url: "/admin/reset_password"})
     end
 
     it "fails if you're not an admin" do
@@ -80,7 +86,7 @@ describe AdminController, :type => :controller do
   describe "POST reset_password" do
     it "requires you to be logged in" do
       post "reset_password"
-      expect(response).to redirect_to(:controller =>  "user", :action => "login", url: "/admin/reset_password")
+      expect(response).to redirect_to(:controller =>  "user", :action => "login")
     end
 
     it "fails if you're not an admin" do
@@ -91,11 +97,12 @@ describe AdminController, :type => :controller do
     it "resets a user's password" do
       request.session[:user_id] = @admin.id
       oldpass = @user.password_hash
-      post "reset_password", {user: {name: @user.name}}
+      post "reset_password", {params: {user: {name: @user.name}}}
       expect(response).to be_success
       expect(flash[:notice]).to match(/Password reset to/)
       expect(@user.reload.password_hash).not_to eq(oldpass)
     end
   end
+
 
 end
