@@ -1,10 +1,16 @@
 require 'spec_helper'
+require 'database_cleaner'
 
 describe AdminController, :type => :controller do
   before(:all) do
-    # Note, this must be in this order because the first user gets "autopromoted" to admin
+    DatabaseCleaner.start
+    # first user is auto-promoted to admin
     @admin = FactoryBot.create(:admin)
     @user = FactoryBot.create(:user)
+  end
+
+  after(:all) do
+    DatabaseCleaner.clean
   end
 
   describe "GET index" do
@@ -45,7 +51,7 @@ describe AdminController, :type => :controller do
   describe "POST edit_user" do
     it "requires you to be logged in" do
       post "edit_user"
-      expect(response).to redirect_to(:controller =>  "user", :action => "login", url: "/admin/edit_user")
+      expect(response).to redirect_to(:controller =>  "user", :action => "login")
     end
     it "fails if you're not an admin" do
       request.session[:user_id] = @user.id
@@ -97,5 +103,6 @@ describe AdminController, :type => :controller do
       expect(@user.reload.password_hash).not_to eq(oldpass)
     end
   end
+
 
 end
