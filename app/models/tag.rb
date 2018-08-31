@@ -58,9 +58,21 @@ class Tag < ActiveRecord::Base
     name
   end
 
+  def self.normalize_name(name)
+    if name =~ /^source:/
+      [" ", "-", "~", "`"].each do |c| 
+        # percent encode more aggressively than URI.encode to avoid all invalid characters
+        name = name.gsub(c, "%" + c.ord.to_s(16))
+      end
+      name
+    else
+      # Reserve ` as a field separator for tag/summary.
+      name.downcase.tr(" ", "_").gsub(/^[-~]+/, "").gsub(/`/, "")
+    end
+  end
+
   def self.find_or_create_by_name(name)
-    # Reserve ` as a field separator for tag/summary.
-    name = name.downcase.tr(" ", "_").gsub(/^[-~]+/, "").gsub(/`/, "")
+    name = self.normalize_name(name)
 
     ambiguous = false
     tag_type = nil
