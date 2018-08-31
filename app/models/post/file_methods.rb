@@ -262,6 +262,9 @@ module Post::FileMethods
     elsif FFMPEG::Movie.new(tempfile_path).valid?
       self.file_ext = File.magic_number_type(tempfile_path).to_s # returns webm for webm
     end
+    if self.file_ext == "apng"
+      self.file_ext = "png"
+    end
   end
 
   # Assigns a CGI file to the post. This writes the file to disk and generates a unique file name.
@@ -366,6 +369,9 @@ module Post::FileMethods
 
     when "image/webp"
       "webp"
+
+    when "image/apng"
+      return "png"
 
     when "application/x-shockwave-flash"
       "swf"

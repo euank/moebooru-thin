@@ -115,6 +115,9 @@ class InlineImage < ApplicationRecord
     if imgsize[:type]
       self.file_ext = imgsize[:type].gsub(/jpeg/i, "jpg").downcase
     end
+    if self.file_ext == "apng"
+      self.file_ext = "png"
+    end
 
     unless %w[jpg png gif].include?(file_ext.downcase)
       errors.add(:file, "is an invalid content type: " + (file_ext.downcase || "unknown"))
