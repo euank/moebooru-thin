@@ -1,4 +1,4 @@
-class TagAlias < ActiveRecord::Base
+class TagAlias < ApplicationRecord
   belongs_to :tag, :foreign_key => "alias_id"
   before_create :normalize
   before_create :validate_uniqueness
@@ -58,7 +58,7 @@ class TagAlias < ActiveRecord::Base
     tag = Tag.find_or_create_by_name(self.name)
 
     if alias_tag.tag_type != tag.tag_type
-      alias_tag.update_attribute(:tag_type, tag.tag_type)
+      alias_tag.update(:tag_type => tag.tag_type)
     end
 
     self.alias_id = alias_tag.id
@@ -77,7 +77,7 @@ class TagAlias < ActiveRecord::Base
 
     Post.available.has_all_tags(name).find_each do |post|
       post.reload
-      post.update_attributes(:tags => post.cached_tags, :updater_user_id => user_id, :updater_ip_addr => ip_addr)
+      post.update(:tags => post.cached_tags, :updater_user_id => user_id, :updater_ip_addr => ip_addr)
     end
 
     Moebooru::CacheHelper.increment_version("tag")

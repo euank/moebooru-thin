@@ -5,6 +5,7 @@ mkdir -p public/data
 cat <<EOF > config/database.yml
 test:
   adapter: postgresql
+  port: 5433
   username: postgres
   database: moebooru_test
 EOF

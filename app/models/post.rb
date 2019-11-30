@@ -1,4 +1,4 @@
-class Post < ActiveRecord::Base
+class Post < ApplicationRecord
   STATUSES = %w(active pending flagged deleted)
 
   define_callbacks :delete
@@ -203,7 +203,7 @@ class Post < ActiveRecord::Base
   def normalized_source
     if source =~ /(pixiv\.net|pximg\.net)\/img/
       img_id = source[/(\d+)(_s|_m|(_big)?_p\d+)?\.\w+(\?\d+)?\z/, 1]
-      "http://www.pixiv.net/member_illust.php?mode=medium&illust_id=#{img_id}"
+      "https://www.pixiv.net/artworks/#{img_id}"
     elsif source =~ /\Ahttps?:\/\//i
       source
     else

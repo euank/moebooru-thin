@@ -1,4 +1,4 @@
-class Tag < ActiveRecord::Base
+class Tag < ApplicationRecord
   include Tag::TypeMethods
   include Tag::CacheMethods
   include Tag::RelatedTagMethods
@@ -91,11 +91,11 @@ class Tag < ActiveRecord::Base
 
     if tag
       if tag_type
-        tag.update_attributes(:tag_type => tag_type)
+        tag.update(:tag_type => tag_type)
       end
 
       if ambiguous
-        tag.update_attributes(:is_ambiguous => ambiguous)
+        tag.update(:is_ambiguous => ambiguous)
       end
 
       return tag
@@ -127,7 +127,7 @@ class Tag < ActiveRecord::Base
       start = TagAlias.to_aliased(Tag.scan_tags(start_tags))
       result = TagAlias.to_aliased(Tag.scan_tags(result_tags))
       tags = (p.cached_tags.scan(/\S+/) - start + result).join(" ")
-      p.update_attributes(:updater_user_id => updater_id, :updater_ip_addr => updater_ip_addr, :tags => tags)
+      p.update(:updater_user_id => updater_id, :updater_ip_addr => updater_ip_addr, :tags => tags)
     end
   end
 

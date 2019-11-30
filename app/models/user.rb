@@ -1,6 +1,6 @@
 require "digest/sha1"
 
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   has_many :user_logs
   has_many :post_votes
   attr_accessor :current_email
@@ -533,7 +533,7 @@ class User < ActiveRecord::Base
       FileUtils.mv(tempfile_path, avatar_path)
       FileUtils.chmod(0775, avatar_path)
 
-      update_attributes(
+      update(
         :avatar_post_id => params[:post_id],
         :avatar_top => params[:top],
         :avatar_bottom => params[:bottom],
@@ -670,7 +670,7 @@ class User < ActiveRecord::Base
       else "id DESC"
       end
 
-    res.order(order)
+    res.order(Arel.sql(order))
   end
 
   # FIXME: ensure not used and then nuke

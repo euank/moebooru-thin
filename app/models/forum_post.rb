@@ -1,4 +1,4 @@
-class ForumPost < ActiveRecord::Base
+class ForumPost < ApplicationRecord
   belongs_to :creator, :class_name => "User", :foreign_key => :creator_id
   belongs_to :updater, :class_name => "User", :foreign_key => :last_updated_by
   after_create :initialize_last_updated_by
@@ -63,14 +63,14 @@ class ForumPost < ActiveRecord::Base
     def update_parent_on_destroy
       unless is_parent?
         p = parent
-        p.update_attributes(:response_count => p.response_count - 1)
+        p.update(:response_count => p.response_count - 1)
       end
     end
 
     def update_parent_on_create
       unless is_parent?
         p = parent
-        p.update_attributes(:updated_at => updated_at, :response_count => p.response_count + 1, :last_updated_by => creator_id)
+        p.update(:updated_at => updated_at, :response_count => p.response_count + 1, :last_updated_by => creator_id)
       end
     end
 
@@ -150,7 +150,7 @@ class ForumPost < ActiveRecord::Base
 
   def initialize_last_updated_by
     if is_parent?
-      update_attribute(:last_updated_by, creator_id)
+      update(:last_updated_by => creator_id)
     end
   end
 

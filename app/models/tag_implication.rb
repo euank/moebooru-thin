@@ -1,4 +1,4 @@
-class TagImplication < ActiveRecord::Base
+class TagImplication < ApplicationRecord
   before_create :validate_uniqueness
 
   def validate_uniqueness
@@ -44,7 +44,7 @@ class TagImplication < ActiveRecord::Base
     implied_tags = self.class.with_implied(t.name).join(" ")
     t._posts.available.find_each do |post|
       post.reload
-      post.update_attributes(:tags => post.cached_tags + " " + implied_tags, :updater_user_id => user_id, :updater_ip_addr => ip_addr)
+      post.update(:tags => post.cached_tags + " " + implied_tags, :updater_user_id => user_id, :updater_ip_addr => ip_addr)
     end
   end
 

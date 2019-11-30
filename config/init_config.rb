@@ -1,6 +1,6 @@
 CONFIG = {}
 # The version of this Moebooru.
-CONFIG["version"] = "5.2.0"
+CONFIG["version"] = "6.0.0"
 
 # The default name to use for anyone who isn't logged in.
 CONFIG["default_guest_name"] = "Anonymous"
@@ -274,7 +274,7 @@ CONFIG["min_mpixels"] = nil
 # approved.
 CONFIG["hide_pending_posts"] = false
 
-CONFIG["available_locales"] = %w(de en es ja ru zh_CN)
+CONFIG["available_locales"] = %w(de en es ja ru zh_CN zh_TW)
 
 # Time to load local configurations.
 # The timing is probably wrong but whatever, I'll fix this later(tm).
