@@ -34,8 +34,8 @@ gem "daemons", require: false
 gem "newrelic_rpm"
 gem "nokogiri"
 gem "rails-i18n"
-gem "addressable", require: "addressable/uri"
-gem "mini_magick"
+gem "addressable", :require => "addressable/uri"
+gem 'ruby-vips'
 gem "image_size"
 gem "i18n-js", ">= 3.0.0.rc7"
 

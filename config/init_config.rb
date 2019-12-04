@@ -300,7 +300,7 @@ CONFIG["secure"] = false if CONFIG["secure"].nil?
 
 CONFIG["bundler_groups"] ||= [ :default, Rails.env ]
 
-CONFIG["bgcolor"] ||= "gray"
+CONFIG["bgcolor"] ||= [0x7e]
 
 CONFIG["threads"] ||= (ENV["MB_THREADS"] || 1).to_i
 
