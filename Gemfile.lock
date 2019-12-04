@@ -128,7 +128,6 @@ GEM
       mimemagic (~> 0.3.2)
     method_source (0.9.2)
     mimemagic (0.3.3)
-    mini_magick (4.9.5)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     minitest (5.13.0)
@@ -222,6 +221,8 @@ GEM
       rspec-mocks (~> 3.9.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.0)
+    ruby-vips (2.0.16)
+      ffi (~> 1.9)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.2.1)
@@ -292,7 +293,6 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   json
-  mini_magick
   mini_mime
   newrelic_rpm
   nokogiri
@@ -310,6 +310,7 @@ DEPENDENCIES
   rails-i18n
   rspec
   rspec-rails
+  ruby-vips
   sass-rails
   sitemap_generator
   streamio-ffmpeg

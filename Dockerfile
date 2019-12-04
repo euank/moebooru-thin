@@ -1,15 +1,13 @@
-FROM ruby:2.4
-
-RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' > /etc/apt/sources.list.d/backports.list
+FROM ruby:2.6-buster
 
 RUN apt-get update -y
 RUN apt-get upgrade -y
-RUN apt-get install -y gcc g++ imagemagick jhead libxslt-dev libyaml-dev git libssl-dev \
+RUN apt-get install -y gcc g++ jhead libxslt-dev libyaml-dev git libssl-dev \
     libpq-dev libreadline-dev libmagic-dev \
-    gnash-tools \
     postgresql-client \
     rsync \
-    ffmpeg
+    ffmpeg \
+    libvips-dev
 
 COPY . /moebooru
 WORKDIR /moebooru

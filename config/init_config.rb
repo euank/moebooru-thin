@@ -300,7 +300,7 @@ CONFIG["standalone"] = true if CONFIG["standalone"].nil?
 CONFIG["bundler_groups"] ||= [:default, Rails.env]
 CONFIG["bundler_groups"] << "standalone" if CONFIG["standalone"]
 
-CONFIG["bgcolor"] ||= "gray"
+CONFIG["bgcolor"] ||= [0x7e]
 
 CONFIG["threads"] ||= (ENV["MB_THREADS"] || 1).to_i
 
