@@ -16,7 +16,7 @@ test:
 
 production:
   adapter: postgresql
-  database: moebooru
+  database: <%= ENV['DB_NAME'] || 'moebooru' %>
   host: <%= ENV['DB_HOST'] %>
   username: <%= ENV['DB_USER'] %>
   password: <%= ENV['DB_PASS'] %>
