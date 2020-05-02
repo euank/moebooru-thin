@@ -40,7 +40,7 @@ module Post::FileMethods
   end
 
   def validate_content_type
-    unless %w(jpg png gif swf pdf webm mp4).include?(file_ext.downcase)
+    unless %w(jpg png gif webp swf pdf webm mp4).include?(file_ext.downcase)
       errors.add(:file, "is an invalid content type: " + file_ext.downcase)
       throw :abort
     end
@@ -231,6 +231,7 @@ module Post::FileMethods
 
       Moebooru::Resizer.resize(ext, path, tempfile_preview_path, size, 85)
     rescue => x
+      logger.error "error generating preview #{x}"
       errors.add "preview", "couldn't be generated (#{x})"
       return false
     end
@@ -350,7 +351,7 @@ module Post::FileMethods
 
   # Returns true if the post is an image format that GD can handle.
   def image?
-    %w(jpg jpeg gif png).include?(file_ext.downcase)
+    %w(jpg jpeg gif png webp).include?(file_ext.downcase)
   end
 
   def video?
@@ -387,6 +388,9 @@ module Post::FileMethods
     when "image/apng"
       return "png"
 
+    when "image/webp"
+      return "webp"
+
     when "application/x-shockwave-flash"
       return "swf"
 
@@ -419,8 +423,8 @@ module Post::FileMethods
     return true unless width && height
     return true if (file_ext.downcase == "gif")
 
-    # Always create samples for PNGs.
-    if file_ext.downcase == "png"
+    # Always create samples for PNGs and webp
+    if file_ext.downcase == "png" || file_ext.downcase == "webp"
       ratio = 1
     else
       ratio = CONFIG["sample_ratio"]
