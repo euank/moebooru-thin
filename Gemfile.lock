@@ -96,7 +96,7 @@ GEM
     factory_bot_rails (5.1.1)
       factory_bot (~> 5.1.0)
       railties (>= 4.2.0)
-    ffi (1.11.3)
+    ffi (1.13.1)
     gctools (0.2.4)
     geoip (1.6.4)
     get_process_mem (0.2.5)
@@ -322,4 +322,4 @@ DEPENDENCIES
   will_paginate
 
 BUNDLED WITH
-   1.16.1
+   2.1.4
