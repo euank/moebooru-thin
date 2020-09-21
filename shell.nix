@@ -3,19 +3,20 @@
 with nixpkgs;
 nixpkgs.mkShell {
   buildInputs = with pkgs; [
-    ruby
     bundler
+    glib
+    glibc.dev
     imagemagick
     imagemagick.dev
-    postgresql.lib
+    jhead
     postgresql
+    postgresql.lib
+    ruby
     sqlite
     sqlite.dev
-    yarn
-    glibc.dev
-    glib
     vips
     vips.dev
+    yarn
   ];
 
   PKG_CONFIG_PATH = "${pkgs.imagemagick.dev}/lib/pkgconfig";
