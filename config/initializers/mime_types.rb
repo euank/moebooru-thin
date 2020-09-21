@@ -4,3 +4,6 @@
 # Mime::Type.register "text/richtext", :rtf
 Mime::Type.register "application/opensearchdescription+xml", :opensearch
 Mime::Type.register "text/plain", :txt
+Mime::Type.register "application/x-shockwave-flash", :swf
+Mime::Type.register "application/wasm", :wasm
+Rack::Mime::MIME_TYPES[".wasm"] = "application/wasm"
