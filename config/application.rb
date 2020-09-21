@@ -56,6 +56,10 @@ module Moebooru
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = "1.0"
 
+    config.assets.configure do |env|
+      env.register_mime_type('application/wasm', extensions: ['.wasm'])
+    end
+
     if CONFIG["memcache_servers"]
       config.cache_store = :dalli_store, CONFIG["memcache_servers"], {
         :namespace => CONFIG["app_name"],

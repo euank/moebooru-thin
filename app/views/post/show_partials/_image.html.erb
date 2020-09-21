@@ -37,6 +37,7 @@
       </object>
 
       <p><%= link_to t('.save_flash'), @post.file_url %></p>
+      <%= javascript_include_tag 'ruffle/ruffle.js' %>
     <% else %>
       <h2><a href="<%= @post.file_url %>"><%= t('.download._') %></a></h2>
       <p><%= t('.download.info') %></p>
@@ -61,4 +62,3 @@
     </script>
   </div>
 <% end %>
-
