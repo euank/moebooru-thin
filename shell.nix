@@ -5,7 +5,6 @@ nixpkgs.mkShell {
   buildInputs = with pkgs; [
     bundler
     glib
-    glibc.dev
     imagemagick
     imagemagick.dev
     jhead
@@ -21,4 +20,5 @@ nixpkgs.mkShell {
 
   PKG_CONFIG_PATH = "${pkgs.imagemagick.dev}/lib/pkgconfig";
   LD_LIBRARY_PATH="${pkgs.glib.out}/lib:${pkgs.vips.out}/lib";
+  BUNDLE_PATH="${toString ./.}/vendor";
 }

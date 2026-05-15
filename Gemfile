@@ -32,12 +32,14 @@ gem "will-paginate-i18n"
 gem "sitemap_generator"
 gem "daemons", require: false
 gem "newrelic_rpm"
-gem "nokogiri"
+gem "nokogiri", ">= 1.12"
 gem "rails-i18n"
 gem "addressable", :require => "addressable/uri"
 gem 'ruby-vips'
 gem "image_size"
 gem "i18n-js", ">= 3.0.0.rc7"
+
+gem "oso-oso", "0.25.0"
 
 gem "streamio-ffmpeg"
 # The git 1.2.x contains webm; this is what we want
