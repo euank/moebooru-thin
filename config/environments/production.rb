@@ -19,6 +19,12 @@ Rails.application.configure do
   config.public_file_server.enabled = true
   config.public_file_server.headers = { "cache-control" => "public, max-age=#{1.year.to_i}" }
 
+  # Keep bundled static files outside public/, which may be replaced by a
+  # persistent volume in production.
+  config.middleware.insert_before 0, ActionDispatch::Static,
+    Rails.root.join("vendor/static").to_s,
+    headers: { "cache-control" => "public, max-age=#{1.year.to_i}" }
+
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
 
