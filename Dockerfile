@@ -1,27 +1,30 @@
-FROM ruby:2.6-buster
+FROM node:22-bookworm-slim AS node
 
-# For build-dep vips
-RUN echo 'deb-src http://deb.debian.org/debian buster main' >> /etc/apt/sources.list
-RUN apt-get update -y
-RUN apt-get install -y build-essential jhead libxslt-dev libyaml-dev git libssl-dev \
-    libpq-dev libreadline-dev libmagic-dev \
-    postgresql-client \
-    rsync \
-    ffmpeg
+FROM ruby:3.4-bookworm
 
-# Build libvips from source
-RUN apt-get -y build-dep vips
-RUN mkdir /build-vips
-RUN vips_ver="8.13.3" && \
-    cd /build-vips && \
-    wget https://github.com/libvips/libvips/releases/download/v${vips_ver}/vips-${vips_ver}.tar.gz && \
-    tar xf vips-${vips_ver}.tar.gz && \
-    cd vips-${vips_ver} && \
-    ./configure && make && make install && \
-    cd / && rm -r /build-vips
+COPY --from=node /usr/local/ /usr/local/
+
+RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends \
+      build-essential \
+      ffmpeg \
+      git \
+      imagemagick \
+      jhead \
+      libmagic-dev \
+      libpq-dev \
+      libvips-dev \
+      postgresql-client \
+      rsync && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY . /moebooru
 WORKDIR /moebooru
-ENV RAILS_ENVIRONMENT=production
+ENV RAILS_ENV=production \
+    BUNDLE_WITHOUT=development:test
+
 RUN bundle install
+RUN npm ci && npm run build
+RUN SECRET_KEY_BASE_DUMMY=1 bundle exec rails assets:precompile
+
 ENTRYPOINT ["/moebooru/docker-entrypoint"]

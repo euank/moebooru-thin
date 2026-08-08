@@ -1,0 +1,12 @@
+.bundle
+.envrc
+.git
+.ignore
+config/local_config.rb
+log
+node_modules
+public/assets
+public/cache
+public/data
+tmp
+vendor
