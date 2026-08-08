@@ -36,11 +36,6 @@ group :test, :development do
   gem "database_cleaner"
 end
 
-group :standalone do
-  gem "unicorn", require: false
-  gem "unicorn-worker-killer", require: false
-end
-
 group :test do
   gem "rails-controller-testing"
 end

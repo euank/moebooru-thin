@@ -17,4 +17,4 @@ if ! bundle exec rake db:migrate; then
 fi
 bundle exec rake assets:precompile
 
-exec bundle exec unicorn
+exec bundle exec puma --bind "tcp://0.0.0.0:${PORT:-8080}"
