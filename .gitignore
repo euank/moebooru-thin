@@ -18,6 +18,7 @@
 
 /public/packs
 /public/packs-test
+/.playwright-cli/
 /node_modules
 
 /app/assets/builds/*

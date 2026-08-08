@@ -30,7 +30,7 @@ jobs:
     - name: Install additional packages
       run: |
         sudo apt-get update
-        sudo apt-get install imagemagick libvips42
+        sudo apt-get install ffmpeg imagemagick libvips42
 
     - uses: actions/setup-node@v7
       with:
