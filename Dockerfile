@@ -12,7 +12,7 @@ RUN apt-get install -y build-essential jhead libxslt-dev libyaml-dev git libssl-
 # Build libvips from source
 RUN apt-get -y build-dep vips
 RUN mkdir /build-vips
-RUN vips_ver="8.8.4" && \
+RUN vips_ver="8.13.3" && \
     cd /build-vips && \
     wget https://github.com/libvips/libvips/releases/download/v${vips_ver}/vips-${vips_ver}.tar.gz && \
     tar xf vips-${vips_ver}.tar.gz && \
