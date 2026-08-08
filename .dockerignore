@@ -9,4 +9,8 @@ public/assets
 public/cache
 public/data
 tmp
-vendor
+vendor/*
+!vendor/static/
+vendor/static/*
+!vendor/static/ruffle/
+!vendor/static/ruffle/**
