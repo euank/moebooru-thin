@@ -3,14 +3,17 @@
 with nixpkgs;
 nixpkgs.mkShell {
   buildInputs = with pkgs; [
-    bundler
     glib
     imagemagick
     imagemagick.dev
+    ffmpeg
     jhead
+    memcached
+    postgresql.pg_config
     postgresql
-    postgresql.lib
-    ruby
+    postgresql.dev
+    ruby_3_4
+    (bundler.override { ruby = ruby_3_4; })
     sqlite
     sqlite.dev
     vips

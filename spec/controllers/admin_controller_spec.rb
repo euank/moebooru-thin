@@ -1,16 +1,9 @@
 require 'spec_helper'
-require 'database_cleaner'
-
 describe AdminController, :type => :controller do
-  before(:all) do
-    DatabaseCleaner.start
+  before(:each) do
     # first user is auto-promoted to admin
     @admin = FactoryBot.create(:admin)
     @user = FactoryBot.create(:user)
-  end
-
-  after(:all) do
-    DatabaseCleaner.clean
   end
 
   describe "GET index" do
@@ -22,12 +15,12 @@ describe AdminController, :type => :controller do
     it "fails if you're not an admin" do
       request.session[:user_id] = @user.id
       get "index"
-      expect(response).not_to be_success
+      expect(response).not_to be_successful
     end
     it "works if you're an admin" do
       request.session[:user_id] = @admin.id
       get "index"
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
   describe "GET edit_user" do
@@ -39,12 +32,12 @@ describe AdminController, :type => :controller do
     it "fails if you're not an admin" do
       request.session[:user_id] = @user.id
       get "edit_user"
-      expect(response).not_to be_success
+      expect(response).not_to be_successful
     end
     it "works if you're an admin" do
       request.session[:user_id] = @admin.id
       get "edit_user"
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
@@ -56,11 +49,11 @@ describe AdminController, :type => :controller do
     it "fails if you're not an admin" do
       request.session[:user_id] = @user.id
       post "edit_user"
-      expect(response).not_to be_success
+      expect(response).not_to be_successful
     end
     it "lets you change a user's level" do
       request.session[:user_id] = @admin.id
-      post "edit_user", {params: {user: {name: @user.name, level: @admin.level}}}
+      post "edit_user", params: { user: { name: @user.name, level: @admin.level } }
       expect(@user.reload.level).to eq @admin.level
     end
   end
@@ -74,12 +67,12 @@ describe AdminController, :type => :controller do
     it "fails if you're not an admin" do
       request.session[:user_id] = @user.id
       get "reset_password"
-      expect(response).not_to be_success
+      expect(response).not_to be_successful
     end
     it "works if you're an admin" do
       request.session[:user_id] = @admin.id
       get "reset_password"
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
@@ -92,13 +85,13 @@ describe AdminController, :type => :controller do
     it "fails if you're not an admin" do
       request.session[:user_id] = @user.id
       post "reset_password"
-      expect(response).not_to be_success
+      expect(response).not_to be_successful
     end
     it "resets a user's password" do
       request.session[:user_id] = @admin.id
       oldpass = @user.password_hash
-      post "reset_password", {params: {user: {name: @user.name}}}
-      expect(response).to be_success
+      post "reset_password", params: { user: { name: @user.name } }
+      expect(response).to be_successful
       expect(flash[:notice]).to match(/Password reset to/)
       expect(@user.reload.password_hash).not_to eq(oldpass)
     end

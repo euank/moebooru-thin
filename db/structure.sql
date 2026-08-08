@@ -1,6 +1,7 @@
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -304,41 +305,6 @@ CREATE FUNCTION public.user_logs_touch(new_user_id integer, new_ip inet) RETURNS
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
-
---
--- Name: advertisements; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.advertisements (
-    id integer NOT NULL,
-    image_url character varying(255) NOT NULL,
-    referral_url character varying(255) NOT NULL,
-    ad_type character varying(255) NOT NULL,
-    status character varying(255) NOT NULL,
-    hit_count integer DEFAULT 0 NOT NULL,
-    width integer NOT NULL,
-    height integer NOT NULL
-);
-
-
---
--- Name: advertisements_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.advertisements_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: advertisements_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.advertisements_id_seq OWNED BY public.advertisements.id;
-
 
 --
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
@@ -1586,13 +1552,6 @@ CREATE TABLE public.wiki_pages (
 
 
 --
--- Name: advertisements id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.advertisements ALTER COLUMN id SET DEFAULT nextval('public.advertisements_id_seq'::regclass);
-
-
---
 -- Name: artist_urls id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1737,14 +1696,6 @@ ALTER TABLE ONLY public.user_logs ALTER COLUMN id SET DEFAULT nextval('public.us
 --
 
 ALTER TABLE ONLY public.user_records ALTER COLUMN id SET DEFAULT nextval('public.user_records_id_seq'::regclass);
-
-
---
--- Name: advertisements advertisements_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.advertisements
-    ADD CONSTRAINT advertisements_pkey PRIMARY KEY (id);
 
 
 --
@@ -3407,6 +3358,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20160113112901'),
 ('20151207113346'),
 ('20140905023318'),
+('20140603085449'),
 ('20140429125422'),
 ('20140427041839'),
 ('20140309152432'),

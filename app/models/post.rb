@@ -92,12 +92,11 @@ class Post < ApplicationRecord
   end
 
   def can_user_delete?(user)
-    OSO.allowed?(actor: user, action: "delete", resource: self)
-    #return false unless user.has_permission?(self)
+    return false unless user.has_permission?(self)
 
-    #return false if !user.is_mod_or_higher? && !is_held && created_at < 1.day.ago
+    return false if !user.is_mod_or_higher? && !is_held && created_at < 1.day.ago
 
-    #true
+    true
   end
 
   def clear_avatars

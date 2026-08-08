@@ -7,6 +7,7 @@
 //= link 500.html
 //
 //= link_tree ../images
+//= link_tree ../builds
 //= link_tree ../html
 //= link ruffle/ruffle.js
 //= link ruffle/core.ruffle.0d38236ccca48d5901d4.js

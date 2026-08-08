@@ -1,11 +1,5 @@
 # encoding: utf-8
 require "digest/md5"
-require 'oso'
-
-OSO = Oso.new
-OSO.register_class(User)
-OSO.register_class(Post)
-OSO.load_files(["./app/oso/main.polar"])
 
 class ApplicationController < ActionController::Base
   protect_from_forgery
@@ -357,12 +351,7 @@ class ApplicationController < ActionController::Base
   end
 
   def post_member_only
-    begin
-      OSO.authorize(@current_user, "upload", Post.new)
-    rescue => e
-      puts "Exception: #{e.inspect}"
-      access_denied
-    end
+    access_denied unless @current_user.is_member_or_higher?
   end
 
   def no_anonymous

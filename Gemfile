@@ -2,28 +2,13 @@ source "https://rubygems.org"
 
 gem "rails", "~> 8.1.0"
 
-gem "jquery-rails"
-gem "jquery-ui-rails"
-gem "uglifier"
-gem "therubyracer"
+gem "sprockets-rails"
+gem "jsbundling-rails", ">= 1.3.0"
+gem "terser"
 
-gem "sass-rails"
+gem "pg"
 
-
-source "https://rails-assets.org" do
-  gem "rails-assets-js-cookie"
-  gem "rails-assets-mousetrap"
-end
-
-gem "non-stupid-digest-assets"
-gem 'coffee-rails'
-
-gem "pg", :platforms => [:ruby, :mingw]
-gem "activerecord-jdbcpostgresql-adapter", ">= 1.3.0", :platforms => :jruby
-gem "foreigner"
-
-gem "diff-lcs"
-gem "json"
+gem "diff-lcs", require: [ "diff-lcs", "diff/lcs/array" ]
 gem "dalli"
 gem "connection_pool"
 gem "exception_notification"
@@ -32,40 +17,28 @@ gem "will-paginate-i18n"
 gem "sitemap_generator"
 gem "daemons", require: false
 gem "newrelic_rpm"
-gem "nokogiri", ">= 1.12"
+gem "nokogiri"
 gem "rails-i18n"
-gem "addressable", :require => "addressable/uri"
-gem 'ruby-vips'
-gem "image_size"
-gem "i18n-js", ">= 3.0.0.rc7"
-
-gem "oso-oso", "0.25.0"
+gem "addressable", require: "addressable/uri"
+gem "mini_magick"
+gem "ruby-vips"
+gem "i18n-js", "~> 3.0.0"
+gem "mini_mime"
+gem "puma", require: false
 
 gem "streamio-ffmpeg"
-# The git 1.2.x contains webm; this is what we want
-gem "file_signature", :git => 'http://github.com/distler/file_signature.git'
-
-group :development do
-  gem "puma"
-end
+gem "file_signature", git: "https://github.com/distler/file_signature.git"
 
 group :test, :development do
   gem "rspec"
   gem "rspec-rails"
   gem "factory_bot_rails"
   gem "database_cleaner"
-  gem "autotest"
-  gem "autotest-standalone"
 end
 
 group :standalone do
-  platform :mri do
-    gem "unicorn", :require => false
-    gem "unicorn-worker-killer", :require => false
-    gem "gctools"
-  end
-  gem "puma", :platforms => [:jruby, :rbx, :mswin], :require => false
-  gem "thin", :platforms => [:mswin, :mingw]
+  gem "unicorn", require: false
+  gem "unicorn-worker-killer", require: false
 end
 
 group :test do
@@ -75,9 +48,9 @@ end
 gem "pry", group: [ :development, :test ]
 gem "rubocop-rails-omakase", require: false, group: [ :development ]
 
-gem "oj", :platforms => :mri
+gem "oj", platforms: :mri
 gem "multi_json"
-gem "jbuilder"
+gem "jbuilder", "~> 2.5"
 
 # Must be last.
-gem "rack-mini-profiler", :group => :development
+gem "rack-mini-profiler", group: :development

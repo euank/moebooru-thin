@@ -258,8 +258,8 @@ module Post::FileMethods
 
     imgsize = Moebooru::ImageSizeExif.path(tempfile_path)
 
-    if !imgsize.format.nil?
-      self.file_ext = imgsize.format.to_s.gsub(/jpeg/i, "jpg").downcase
+    if imgsize[:type]
+      self.file_ext = imgsize[:type].gsub(/jpeg/i, "jpg").downcase
     elsif FFMPEG::Movie.new(tempfile_path).valid?
       self.file_ext = File.magic_number_type(tempfile_path).to_s # returns webm for webm
     end
@@ -286,9 +286,9 @@ module Post::FileMethods
 
   def set_image_dimensions
     if image? || flash?
-      imgsize = ImageSize.path(tempfile_path)
-      self.width = imgsize.width
-      self.height = imgsize.height
+      imgsize = Moebooru::ImageSizeExif.path(tempfile_path)
+      self.width = imgsize[:width]
+      self.height = imgsize[:height]
     elsif video?
       movie = FFMPEG::Movie.new(tempfile_path)
       self.width = movie.width
