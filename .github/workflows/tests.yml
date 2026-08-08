@@ -10,7 +10,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:18
+        image: postgres:16
         env:
           POSTGRES_PASSWORD: postgres
         ports: ['5432:5432']
@@ -25,14 +25,14 @@ jobs:
         ports: ['11211:11211']
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
 
     - name: Install additional packages
       run: |
         sudo apt-get update
         sudo apt-get install imagemagick libvips42
 
-    - uses: actions/setup-node@v4
+    - uses: actions/setup-node@v7
       with:
         cache: npm
 
