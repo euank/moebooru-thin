@@ -30,7 +30,9 @@ jobs:
     - name: Install additional packages
       run: |
         sudo apt-get update
-        sudo apt-get install ffmpeg imagemagick libvips42
+        sudo apt-get install ffmpeg imagemagick libvips42 postgresql-client-16
+        # Match pg_dump and psql to the PostgreSQL service version.
+        echo "/usr/lib/postgresql/16/bin" >> "$GITHUB_PATH"
 
     - uses: actions/setup-node@v7
       with:
