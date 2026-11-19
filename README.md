@@ -12,12 +12,15 @@ Requirements
 
 As this is ongoing project, there will be more changes on requirement as this project goes. Currently this application is developed using:
 
-* Ruby (3.3 or later)
+* Ruby (3.4.13 or later in the 3.4 series; see `.ruby-version`)
 * PostgreSQL (15 or later)
 * Bundler gem
 * node.js (20.0 or later)
 * ImageMagick
 * And various other requirement for the gems (check `Gemfile` for the list)
+
+For Nix development, use a nixpkgs channel providing Ruby 3.4.13 or newer.
+`shell.nix` rejects older Ruby versions.
 
 On RHEL, it goes like this (untested):
 

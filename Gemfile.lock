@@ -377,5 +377,8 @@ DEPENDENCIES
   will-paginate-i18n
   will_paginate
 
+RUBY VERSION
+   ruby 3.4.13p195
+
 BUNDLED WITH
    2.6.9

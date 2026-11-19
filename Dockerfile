@@ -1,6 +1,6 @@
 FROM node:22-bookworm-slim AS node
 
-FROM ruby:3.4-bookworm
+FROM ruby:3.4.13-bookworm
 
 COPY --from=node /usr/local/ /usr/local/
 

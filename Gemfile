@@ -1,5 +1,7 @@
 source "https://rubygems.org"
 
+ruby "~> 3.4.13"
+
 gem "rails", "~> 8.1.0"
 
 gem "sprockets-rails"

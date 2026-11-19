@@ -40,7 +40,7 @@ jobs:
 
     - uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.4
+        # Read the pinned Ruby version from .ruby-version.
         bundler-cache: true
 
     - name: Setup environment

@@ -1,6 +1,8 @@
 { nixpkgs ? import <nixpkgs> {} }:
 
 with nixpkgs;
+assert nixpkgs.lib.assertMsg (nixpkgs.lib.versionAtLeast (toString ruby_3_4.version) "3.4.13")
+  "Ruby 3.4.13 or newer is required; update your nixpkgs channel.";
 nixpkgs.mkShell {
   buildInputs = with pkgs; [
     glib
