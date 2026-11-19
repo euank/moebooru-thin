@@ -6,7 +6,8 @@ env:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # Ubuntu 24.04 supplies the PostgreSQL 16 client used by this job.
+    runs-on: ubuntu-24.04
 
     services:
       postgres:
